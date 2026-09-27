@@ -1,11 +1,12 @@
 # Canonical Game Spec — Pong
 
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Status:** Normative for all Pong implementations  
 **Tick rate:** 60 Hz (`DT = 1/60` s)  
 **Playfield:** 800 × 600 px  
 
-Numbers in [constants.json](constants.json) are authoritative. This document explains rules and behaviour.
+Numbers in [constants.json](constants.json) are authoritative. This document explains rules and behaviour.  
+Offline vs-AI behaviour: [AI_SPEC.md](AI_SPEC.md).
 
 ---
 
@@ -19,12 +20,13 @@ Exercise: game modes, input actions, movement, AABB collision, scoring, fixed ti
 
 ### Non-goals (do not implement in the local game rules)
 
-- AI opponent
 - Power-ups, spin beyond the specified paddle deflection
 - Particle systems affecting gameplay
 - Configurable rules mid-match
 - Mouse control (unless mapped to the same actions and documented)
+- “Smarter” bots that diverge from [AI_SPEC.md](AI_SPEC.md)
 
+Offline vs-AI uses the canonical AI adapter ([AI_SPEC.md](AI_SPEC.md)).  
 Online multiplayer is a **separate layer**: see [PROTOCOL.md](PROTOCOL.md) and [../../MULTIPLAYER.md](../../MULTIPLAYER.md). Online clients do not redefine these rules; the authoritative server runs this simulation.
 
 ---

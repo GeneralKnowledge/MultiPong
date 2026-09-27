@@ -75,12 +75,13 @@ Server maps them to `P1_*` / `P2_*`.
 
 ## Local vs online
 
-| Mode | Who runs `step()` | Who owns scores |
-| --- | --- | --- |
-| Local / tests / offline | Each implementation | Local `GameState` |
-| Online multiplayer | **Server only** | Server `GameState` |
+| Mode | Who runs `step()` | Who owns scores | Opponent |
+| --- | --- | --- | --- |
+| Local / tests / offline | Each implementation | Local `GameState` | Human or [canonical AI](specs/pong/AI_SPEC.md) |
+| Online multiplayer | **Server only** | Server `GameState` | Remote human |
 
-Engine ports should keep simulation code for offline faithfulness tests; online mode is an **adapter** that swaps “local step” for “network state”.
+Engine ports should keep simulation code for offline faithfulness tests; online mode is an **adapter** that swaps “local step” for “network state”.  
+Offline AI is a **deterministic input adapter** (`ai_held`) — not a second ruleset. Do not invent smarter bots.
 
 ---
 

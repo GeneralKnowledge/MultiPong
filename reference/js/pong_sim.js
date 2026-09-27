@@ -1,18 +1,11 @@
 /**
  * Canonical Pong simulation (engine-independent).
- * Faithful port of reference/pong/pong_sim — loads specs/pong/constants.json.
+ * Faithful port of reference/pong/pong_sim — browser + Node safe.
  */
 
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SPEC_DIR = path.resolve(__dirname, "../../specs/pong");
-const RAW = JSON.parse(fs.readFileSync(path.join(SPEC_DIR, "constants.json"), "utf8"));
+import RAW from "./constants_data.js";
 
 export const C = {
-  SPEC_DIR,
   PLAYFIELD_WIDTH: RAW.playfield.width,
   PLAYFIELD_HEIGHT: RAW.playfield.height,
   TICK_RATE: RAW.simulation.tick_rate,
@@ -34,6 +27,10 @@ export const C = {
   POINT_PAUSE_DURATION: RAW.scoring.point_pause_duration,
   POSITION_EPSILON: RAW.comparison.position_epsilon,
   VELOCITY_EPSILON: RAW.comparison.velocity_epsilon,
+  AI_DEADZONE: RAW.ai.deadzone,
+  AI_KIND: RAW.ai.kind,
+  AI_DEFAULT_HUMAN_SEAT: RAW.ai.default_human_seat,
+  AI_DEFAULT_AI_SEAT: RAW.ai.default_ai_seat,
 };
 
 const MODE_MENU = "MENU";
@@ -321,4 +318,30 @@ export function step(state, held = [], pressed = []) {
   }
 
   return events;
+}
+
+/**
+ * Canonical offline AI (specs/pong/AI_SPEC.md).
+ * Returns held action names for the given seat (1 or 2).
+ */
+export function aiHeld(state, seat = C.AI_DEFAULT_AI_SEAT) {
+  if (state.mode !== MODE_PLAYING && state.mode !== MODE_POINT_SCORED) {
+    return [];
+  }
+  const paddleY = seat === 1 ? state.player1.y : state.player2.y;
+  const ball = state.ball;
+  const approaching =
+    (seat === 1 && ball.vx < 0) || (seat === 2 && ball.vx > 0);
+  let targetY;
+  if (ball.active && approaching) {
+    targetY = ball.y;
+  } else {
+    targetY = C.PLAYFIELD_HEIGHT / 2;
+  }
+  const delta = targetY - paddleY;
+  const up = seat === 1 ? "P1_UP" : "P2_UP";
+  const down = seat === 1 ? "P1_DOWN" : "P2_DOWN";
+  if (delta < -C.AI_DEADZONE) return [up];
+  if (delta > C.AI_DEADZONE) return [down];
+  return [];
 }

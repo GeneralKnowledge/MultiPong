@@ -33,15 +33,15 @@ Staged plan for the multi-engine games project. Phases are sequential in intent;
 
 ## Phase 2 — Reference implementation
 
-**Status: complete for headless sims in Python, JS, and Rust**
+**Status: complete for headless sims in Python, JS, and Rust (incl. offline AI)**
 
-- `reference/pong/` — Python simulation + tests (**14/14**)
-- `reference/js/` — JavaScript/Node port + tests (**14/14**)
-- `reference/rust/` — Rust port + `run_tests` binary (**14/14**)
+- `reference/pong/` — Python simulation + AI + tests
+- `reference/js/` — JavaScript/Node port + AI + tests
+- `reference/rust/` — Rust port + AI + `run_tests` binary
+- `specs/pong/AI_SPEC.md` — canonical `simple_track` offline AI
 - `tools/comparison/run_all_tests.sh` — runs all three
-- Windowed local offline clients optional; multiplayer examples cover interactive online play
 
-**Exit criteria:** All canonical tests pass in each reference language; any spec ambiguities found are fixed in `specs/pong/` before further ports spread.
+**Exit criteria:** All canonical tests (sim + AI) pass in each reference language; any spec ambiguities found are fixed in `specs/pong/` before further ports spread.
 
 If the spec is wrong, **fix the spec** — do not quietly diverge a reference.
 
@@ -60,17 +60,22 @@ If the spec is wrong, **fix the spec** — do not quietly diverge a reference.
 
 ---
 
-## Phase 3 — Lightweight stack clients (online)
+## Phase 3 — Lightweight stack clients (dual-mode)
 
-**Status: largely complete for Python / JS / Rust**
+**Status: complete for Python / JS / Rust**
 
-Polished multiplayer clients under `examples/{python,javascript,rust}/` render authoritative server state. Optional follow-up: wire each client’s offline mode to its language’s `reference/*` sim.
+Polished clients under `examples/{python,javascript,rust}/`:
+
+- **Online** — render authoritative server state
+- **Offline** — local `reference/*` sim + shared `simple_track` AI (seat 2)
+
+Stay on Pong until most language/engine ports exist; do not start the next game early.
 
 ---
 
-## Phase 4 — Additional engines
+## Phase 4 — Additional engines (still Pong)
 
-**Goal:** Expand coverage without changing the Pong rules.
+**Goal:** Expand coverage without changing the Pong rules. Each new client should prefer dual-mode when a reference sim exists in that language.
 
 Priority suggestion (adjust to contributor interest):
 

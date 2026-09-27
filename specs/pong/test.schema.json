@@ -21,6 +21,11 @@
       "description": "Partial or full GameState. Missing fields filled from MENU boot defaults then overridden.",
       "type": "object"
     },
+    "ai_seat": {
+      "type": "integer",
+      "enum": [1, 2],
+      "description": "When set, runners call ai_held(state, ai_seat). Optionally assert expect.ai_held; merge AI held into each step when steps are non-empty."
+    },
     "steps": {
       "type": "array",
       "description": "Sequence of InputFrames applied, one per simulation tick.",
@@ -65,7 +70,12 @@
           "default": false
         },
         "position_epsilon": { "type": "number" },
-        "velocity_epsilon": { "type": "number" }
+        "velocity_epsilon": { "type": "number" },
+        "ai_held": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Expected held actions from ai_held at initial state (order ignored)."
+        }
       }
     }
   }

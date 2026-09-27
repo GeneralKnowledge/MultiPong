@@ -4,10 +4,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { bootState, deepMerge, step, C } from "./pong_sim.js";
+import { bootState, deepMerge, step, aiHeld, C } from "./pong_sim.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const TESTS_DIR = path.join(C.SPEC_DIR, "tests");
+const TESTS_DIR = path.resolve(__dirname, "../../specs/pong/tests");
 
 function expandSteps(steps) {
   const frames = [];
@@ -48,7 +48,7 @@ function valuesClose(expected, actual, posEps, velEps, pathKeys) {
   if (typeof expected === "boolean" || expected === null) return actual === expected;
   if (Number.isInteger(expected) && typeof expected === "number") {
     if (typeof actual === "number" && Number.isInteger(actual)) return actual === expected;
-    if (typeof actual === "number" && Number.isInteger(Math.round(actual)) && Math.abs(actual - expected) < 1e-9) {
+    if (typeof actual === "number" && Math.abs(actual - expected) < 1e-9) {
       return Math.round(actual) === expected;
     }
     return actual === expected;
@@ -62,12 +62,31 @@ function valuesClose(expected, actual, posEps, velEps, pathKeys) {
   return actual === expected;
 }
 
+function sameHeld(a, b) {
+  const sa = [...a].sort();
+  const sb = [...b].sort();
+  return JSON.stringify(sa) === JSON.stringify(sb);
+}
+
 function runTest(filePath) {
   const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
   const state = deepMerge(bootState(), data.initial ?? {});
+
+  if (data.ai_seat != null && data.expect?.ai_held) {
+    const held = aiHeld(state, data.ai_seat);
+    if (!sameHeld(held, data.expect.ai_held)) {
+      return [false, `ai_held: expected ${JSON.stringify(data.expect.ai_held)}, got ${JSON.stringify(held)}`];
+    }
+  }
+
   const events = [];
+  const useAi = data.ai_seat != null && (data.steps?.length ?? 0) > 0;
   for (const frame of expandSteps(data.steps ?? [])) {
-    events.push(...step(state, frame.held, frame.pressed));
+    let held = [...frame.held];
+    if (useAi) {
+      held = [...new Set([...held, ...aiHeld(state, data.ai_seat)])];
+    }
+    events.push(...step(state, held, frame.pressed));
   }
   const expect = data.expect ?? {};
   const posEps = expect.position_epsilon ?? C.POSITION_EPSILON;

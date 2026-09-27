@@ -323,6 +323,7 @@ name = "multipong_client"
 version = "0.1.0"
 dependencies = [
  "macroquad",
+ "pong_sim",
  "serde",
  "serde_json",
  "tungstenite",
@@ -363,6 +364,14 @@ dependencies = [
  "fdeflate",
  "flate2",
  "miniz_oxide 0.8.9",
+]
+
+[[package]]
+name = "pong_sim"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

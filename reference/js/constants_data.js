@@ -1,4 +1,5 @@
-{
+// Auto-synced snapshot of specs/pong/constants.json — regenerate if that file changes.
+export default {
   "$schema_comment": "Authoritative numeric and presentation constants for Pong 1.0.0. GAME_SPEC.md explains behaviour; this file wins on numeric conflicts.",
   "version": "1.1.0",
   "playfield": {
@@ -38,8 +39,14 @@
     "point_pause_duration": 1.0,
     "score_color": "#F2F5F8",
     "score_font_size": 32,
-    "score_p1_center": [300, 48],
-    "score_p2_center": [500, 48]
+    "score_p1_center": [
+      300,
+      48
+    ],
+    "score_p2_center": [
+      500,
+      48
+    ]
   },
   "ui": {
     "title": "PONG",
@@ -51,12 +58,18 @@
     "text_color": "#F2F5F8",
     "title_font_size": 48,
     "subtitle_font_size": 16,
-    "title_center": [400, 220],
-    "subtitle_center": [400, 300]
+    "title_center": [
+      400,
+      220
+    ],
+    "subtitle_center": [
+      400,
+      300
+    ]
   },
   "comparison": {
-    "position_epsilon": 1e-4,
-    "velocity_epsilon": 1e-4
+    "position_epsilon": 0.0001,
+    "velocity_epsilon": 0.0001
   },
   "ai": {
     "kind": "simple_track",
@@ -64,4 +77,4 @@
     "default_human_seat": 1,
     "default_ai_seat": 2
   }
-}
+};

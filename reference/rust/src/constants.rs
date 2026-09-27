@@ -12,6 +12,7 @@ struct Raw {
     paddle: Paddle,
     scoring: Scoring,
     comparison: Comparison,
+    ai: Ai,
 }
 
 #[derive(Debug, Deserialize)]
@@ -56,6 +57,14 @@ struct Comparison {
     velocity_epsilon: f64,
 }
 
+#[derive(Debug, Deserialize)]
+struct Ai {
+    kind: String,
+    deadzone: f64,
+    default_human_seat: u8,
+    default_ai_seat: u8,
+}
+
 pub struct Constants {
     pub spec_dir: PathBuf,
     pub playfield_width: f64,
@@ -79,6 +88,10 @@ pub struct Constants {
     pub point_pause_duration: f64,
     pub position_epsilon: f64,
     pub velocity_epsilon: f64,
+    pub ai_kind: String,
+    pub ai_deadzone: f64,
+    pub ai_default_human_seat: u8,
+    pub ai_default_ai_seat: u8,
 }
 
 fn load() -> Constants {
@@ -111,6 +124,10 @@ fn load() -> Constants {
         point_pause_duration: raw.scoring.point_pause_duration,
         position_epsilon: raw.comparison.position_epsilon,
         velocity_epsilon: raw.comparison.velocity_epsilon,
+        ai_kind: raw.ai.kind,
+        ai_deadzone: raw.ai.deadzone,
+        ai_default_human_seat: raw.ai.default_human_seat,
+        ai_default_ai_seat: raw.ai.default_ai_seat,
         spec_dir,
     }
 }

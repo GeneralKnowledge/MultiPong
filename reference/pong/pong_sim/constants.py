@@ -39,4 +39,9 @@ POINT_PAUSE_DURATION = float(RAW["scoring"]["point_pause_duration"])
 POSITION_EPSILON = float(RAW["comparison"]["position_epsilon"])
 VELOCITY_EPSILON = float(RAW["comparison"]["velocity_epsilon"])
 
+AI_KIND = str(RAW["ai"]["kind"])
+AI_DEADZONE = float(RAW["ai"]["deadzone"])
+AI_DEFAULT_HUMAN_SEAT = int(RAW["ai"]["default_human_seat"])
+AI_DEFAULT_AI_SEAT = int(RAW["ai"]["default_ai_seat"])
+
 SPEC_DIR = _SPEC_DIR

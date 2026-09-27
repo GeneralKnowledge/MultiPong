@@ -1,0 +1,21 @@
+{
+  "id": "AI_DEADZONE_IDLE",
+  "description": "AI holds nothing when paddle is within deadzone of target.",
+  "ai_seat": 2,
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 500, "y": 305, "vx": 300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [],
+  "expect": {
+    "ai_held": []
+  }
+}

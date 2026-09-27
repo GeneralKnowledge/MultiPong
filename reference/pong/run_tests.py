@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from pong_sim import boot_state, deep_merge, step  # noqa: E402
+from pong_sim import ai_held, boot_state, deep_merge, step  # noqa: E402
 from pong_sim import constants as C  # noqa: E402
 
 TESTS_DIR = C.SPEC_DIR / "tests"
@@ -72,9 +72,20 @@ def values_close(expected, actual, pos_eps: float, vel_eps: float, path: list[st
 def run_test(path: Path) -> tuple[bool, str]:
     data = json.loads(path.read_text(encoding="utf-8"))
     state = deep_merge(boot_state(), data.get("initial", {}))
+
+    if data.get("ai_seat") is not None and "ai_held" in data.get("expect", {}):
+        held = ai_held(state, int(data["ai_seat"]))
+        expected = list(data["expect"]["ai_held"])
+        if sorted(held) != sorted(expected):
+            return False, f"ai_held: expected {expected!r}, got {held!r}"
+
     events: list[str] = []
+    use_ai = data.get("ai_seat") is not None and bool(data.get("steps"))
     for frame in expand_steps(data.get("steps", [])):
-        events.extend(step(state, frame.get("held"), frame.get("pressed")))
+        held = list(frame.get("held", []))
+        if use_ai:
+            held = sorted(set(held) | set(ai_held(state, int(data["ai_seat"]))))
+        events.extend(step(state, held, frame.get("pressed")))
 
     expect = data.get("expect", {})
     pos_eps = float(expect.get("position_epsilon", C.POSITION_EPSILON))
@@ -88,7 +99,6 @@ def run_test(path: Path) -> tuple[bool, str]:
     expected_events = expect.get("events")
     if expected_events is not None:
         if expect.get("events_ordered"):
-            # exact sequence
             if events != expected_events:
                 return False, f"events: expected {expected_events!r}, got {events!r}"
         else:
