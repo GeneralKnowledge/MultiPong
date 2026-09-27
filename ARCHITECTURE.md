@@ -398,9 +398,11 @@ Not allowed (project-wide):
 
 - a custom multi-engine runtime
 - mandatory ECS
-- networking / multiplayer
-- cloud services / databases
+- matchmaking clouds / accounts / databases
+- P2P meshes or rollback netcode
 - heavy shared frameworks
+
+(A single tiny authoritative WebSocket server is allowed — see [MULTIPLAYER.md](MULTIPLAYER.md).)
 
 If a pattern needs more than a short explanation in the game spec, it is probably too heavy for this experiment.
 

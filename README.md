@@ -19,17 +19,19 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full separation of concerns.
 
 ## What this repo contains (now)
 
-This phase produces the **blueprint only**. No playable implementations yet.
-
-| Document | Purpose |
+| Document / area | Purpose |
 | --- | --- |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Simulation layers, units, determinism, state, input, rendering |
+| [MULTIPLAYER.md](MULTIPLAYER.md) | Cross-engine online play: authoritative WebSocket server |
 | [GAME_SPEC.md](GAME_SPEC.md) | Spec format + index of games |
 | [specs/pong/GAME_SPEC.md](specs/pong/GAME_SPEC.md) | Complete canonical Pong specification |
+| [specs/pong/PROTOCOL.md](specs/pong/PROTOCOL.md) | Multiplayer wire protocol |
 | [TESTING.md](TESTING.md) | Cross-engine tests, replays, comparison goals |
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Rules, faithfulness criteria, per-engine template |
 | [ROADMAP.md](ROADMAP.md) | Phased development plan |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to add a game or engine |
+| [backend/](backend/) | Tiny authoritative server |
+| [reference/pong/](reference/pong/) | Python simulation + test runner |
+| [examples/](examples/) | Minimal multiplayer client per platform |
 
 ## Repository layout
 
@@ -37,42 +39,20 @@ This phase produces the **blueprint only**. No playable implementations yet.
 multi-engine-games/
 ├── README.md
 ├── ARCHITECTURE.md
+├── MULTIPLAYER.md
 ├── GAME_SPEC.md
 ├── TESTING.md
 ├── IMPLEMENTATION_GUIDE.md
 ├── ROADMAP.md
 ├── CONTRIBUTING.md
 │
-├── specs/
-│   └── pong/
-│       ├── GAME_SPEC.md          # Human-readable canonical design
-│       ├── constants.json        # Machine-readable constants
-│       ├── state.schema.json     # Authoritative GameState schema
-│       ├── actions.json          # Canonical input actions
-│       ├── tests/                # Machine-readable behavioural tests
-│       └── replays/              # Deterministic input sequences
-│
-├── assets/
-│   └── pong/                     # Shared sprites, fonts, audio, reference art
-│
-├── reference/
-│   └── pong/                     # Optional reference implementation (Phase 2)
-│
-├── implementations/
-│   ├── pygame/
-│   ├── godot/
-│   ├── unity/
-│   ├── unreal-cpp/
-│   ├── unreal-blueprints/
-│   ├── rpgmaker/
-│   ├── gamemaker/
-│   ├── love2d/
-│   ├── phaser/
-│   └── bevy/
-│
+├── specs/pong/                   # Canonical design + PROTOCOL.md
+├── assets/pong/
+├── reference/pong/               # Python sim + run_tests.py
+├── backend/                      # WebSocket server (uses reference sim)
+├── examples/                     # Small clients (python, js, godot, …)
+├── implementations/              # Full engine ports (stubs / future)
 └── tools/
-    ├── test-runner/              # Future: run canonical tests per engine
-    └── comparison/               # Future: aggregate cross-engine results
 ```
 
 Empty implementation directories are placeholders. Add engines as needed; the structure does not require every engine up front.
@@ -95,21 +75,37 @@ Full criteria: [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#what-faithful-m
 4. Implement simulation first (headless-capable), then rendering and audio.
 5. Run canonical tests from `specs/pong/tests/` and record results in the engine README.
 
+## Multiplayer quick start
+
+```bash
+cd backend && python3 -m pip install -r requirements.txt && python3 server.py
+# other terminals / browsers:
+python3 examples/python/client.py --name alice
+python3 examples/python/client.py --name bob
+# or serve examples/javascript and open two tabs
+```
+
+Details: [MULTIPLAYER.md](MULTIPLAYER.md), [examples/README.md](examples/README.md).
+
 ## Non-goals
 
 This is an experiment, not a commercial engine. Do **not** introduce:
 
 - a universal game engine or shared runtime
 - ECS unless an individual engine already uses it naturally
-- networking, multiplayer, cloud services, or databases
+- matchmaking clouds, accounts, databases, or heavy netcode (rollback meshes, etc.)
 - elaborate asset pipelines or unnecessary dependencies
 
-Prefer: **simple specification + simple simulation + simple adapters + simple tests**.
+A **tiny** shared WebSocket backend (see `backend/`) is intentional and kept minimal.
+
+Prefer: **simple specification + simple simulation + simple adapters + simple tests** (+ one small server for online play).
 
 ## Status
 
 | Phase | Status |
 | --- | --- |
-| Phase 0 — Architecture & documentation | **In progress (this commit)** |
-| Phase 1 — Canonical Pong specification | **Included** |
-| Phase 2+ — Implementations & tooling | See [ROADMAP.md](ROADMAP.md) |
+| Phase 0 — Architecture & documentation | **Done** |
+| Phase 1 — Canonical Pong specification | **Done** |
+| Phase 2 — Reference simulation + tests | **Done** (`reference/pong`, 14/14 tests) |
+| Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`, `examples/`) |
+| Phase 3+ — Full engine ports & tooling | See [ROADMAP.md](ROADMAP.md) |

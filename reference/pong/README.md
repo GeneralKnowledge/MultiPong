@@ -1,11 +1,24 @@
 # Reference implementation — Pong
 
-**Phase 2** lives here.
+Canonical **Python** simulation used for:
 
-Intended contents (not implemented yet):
+- Offline behavioural tests (`run_tests.py`)
+- The authoritative multiplayer server (`backend/server.py`)
 
-- Headless simulation matching `specs/pong/`
-- Optional Pygame (or plain Python) windowed client
-- Test runner executing `specs/pong/tests/`
+## Layout
 
-Until Phase 2 starts, do not treat this folder as authoritative — the **spec** is authoritative.
+```text
+reference/pong/
+├── pong_sim/
+│   ├── constants.py      # loads specs/pong/constants.json
+│   └── simulation.py     # boot_state, step, …
+└── run_tests.py
+```
+
+## Run tests
+
+```bash
+python3 reference/pong/run_tests.py
+```
+
+The **spec** remains normative. If tests and markdown disagree on numbers, fix the loser after checking `constants.json`.

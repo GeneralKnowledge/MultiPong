@@ -17,14 +17,15 @@ A two-player Pong-like game. Each player controls a vertical paddle. A ball boun
 
 Exercise: game modes, input actions, movement, AABB collision, scoring, fixed timestep, simple UI, audio events, deterministic headless simulation.
 
-### Non-goals (do not implement)
+### Non-goals (do not implement in the local game rules)
 
 - AI opponent
 - Power-ups, spin beyond the specified paddle deflection
-- Online multiplayer / networking
 - Particle systems affecting gameplay
 - Configurable rules mid-match
 - Mouse control (unless mapped to the same actions and documented)
+
+Online multiplayer is a **separate layer**: see [PROTOCOL.md](PROTOCOL.md) and [../../MULTIPLAYER.md](../../MULTIPLAYER.md). Online clients do not redefine these rules; the authoritative server runs this simulation.
 
 ---
 

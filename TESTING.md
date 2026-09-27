@@ -153,9 +153,9 @@ Report JSON (for future comparison tool):
   "engine": "pygame",
   "engine_version": "2.5.2",
   "spec_version": "1.0.0",
-  "passed": 13,
+  "passed": 14,
   "failed": 0,
-  "total": 13,
+  "total": 14,
   "results": [
     { "id": "BALL_MOVES_HORIZONTAL", "status": "PASS", "detail": null }
   ]
@@ -174,9 +174,9 @@ compare pong
 Pong Cross-Engine Comparison
 Implementation       Tests       Status
 -----------------------------------------------
-Pygame               13/13       PASS
-Godot                13/13       PASS
-Unity                13/13       PASS
+Pygame               14/14       PASS
+Godot                14/14       PASS
+Unity                14/14       PASS
 ...
 ```
 

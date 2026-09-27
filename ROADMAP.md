@@ -33,17 +33,28 @@ Staged plan for the multi-engine games project. Phases are sequential in intent;
 
 ## Phase 2 — Reference implementation
 
-**Goal:** One simple, readable implementation used to validate the spec.
+**Status: complete for headless sim**
 
-**Recommended:** `reference/pong/` in Python (plain or Pygame), with:
-
-- headless simulation module
-- optional windowed play
-- test runner that executes `specs/pong/tests/`
+- `reference/pong/pong_sim/` — canonical Python simulation
+- `reference/pong/run_tests.py` — runs `specs/pong/tests/` (**14/14 passing**)
+- Windowed local play can still be added; multiplayer examples cover interactive play online
 
 **Exit criteria:** All canonical tests pass; any spec ambiguities found are fixed in `specs/pong/` before multi-engine ports spread.
 
 If the spec is wrong, **fix the spec** — do not quietly diverge the reference.
+
+---
+
+## Phase 2b — Cross-platform multiplayer
+
+**Status: complete for the thin vertical slice**
+
+- Decision: **authoritative WebSocket + JSON** (not P2P / lockstep) — see [MULTIPLAYER.md](MULTIPLAYER.md)
+- `specs/pong/PROTOCOL.md` — wire protocol
+- `backend/server.py` — tiny server using the reference sim
+- `examples/*` — minimal client per target platform
+
+**Exit criteria:** Two different clients can join one room and see the same server `GameState`.
 
 ---
 
@@ -136,9 +147,11 @@ Not planned:
 
 - Universal custom engine
 - Mandatory ECS layer
-- Online multiplayer infrastructure
+- Matchmaking clouds, accounts, databases, rollback netcode
 - Asset store / marketplace
 - Commercial release pipeline
+
+(The tiny authoritative WebSocket server in `backend/` **is** planned and implemented.)
 
 ---
 

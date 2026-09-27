@@ -84,9 +84,9 @@ Separate pure simulation from rendering so tests can run without a window.
 
 Any intentional or forced difference goes in the engine `README.md` under **Known differences**.
 
-### Rule 9 — No networking, cloud, or mega-frameworks
+### Rule 9 — Keep networking thin
 
-Keep the implementation understandable by one developer.
+Online play MUST use the shared [PROTOCOL.md](specs/pong/PROTOCOL.md) against `backend/server.py` (or a compatible host). Do not invent a second protocol, P2P mesh, or per-engine authoritative physics. Offline ports still implement local `step()` for tests.
 
 ### Rule 10 — Shared assets first
 

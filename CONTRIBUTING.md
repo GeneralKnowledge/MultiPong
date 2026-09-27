@@ -4,7 +4,7 @@
 
 1. Spec first — behaviour changes land in `specs/<game>/` before engines diverge.
 2. Tests travel with rules — update `tests/` in the same change.
-3. Keep it small — no frameworks, networking, or speculative abstraction.
+3. Keep it small — no frameworks, speculative abstraction, or alternate net protocols.
 4. Document deviations in the engine README.
 
 ## Adding an engine implementation
