@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-engine-games.local/specs/pong/test.schema.json",
+  "title": "PongBehaviouralTest",
+  "description": "Machine-readable cross-engine behavioural test for Pong.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "description", "initial", "steps", "expect"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "description": { "type": "string" },
+    "dt": {
+      "type": "number",
+      "default": 0.016666666666666666,
+      "description": "Must equal canonical DT unless testing documentation of rejects."
+    },
+    "initial": {
+      "description": "Partial or full GameState. Missing fields filled from MENU boot defaults then overridden.",
+      "type": "object"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Sequence of InputFrames applied, one per simulation tick.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "held": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          },
+          "pressed": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          },
+          "repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1,
+            "description": "Apply this InputFrame this many consecutive ticks."
+          }
+        }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "object",
+          "description": "Partial GameState; only listed fields are compared."
+        },
+        "events": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "If present, these events must have occurred at least once during the run (order not required unless expect.events_ordered is true)."
+        },
+        "events_ordered": {
+          "type": "boolean",
+          "default": false
+        },
+        "position_epsilon": { "type": "number" },
+        "velocity_epsilon": { "type": "number" }
+      }
+    }
+  }
+}

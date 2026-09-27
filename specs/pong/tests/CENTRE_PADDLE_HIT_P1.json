@@ -1,0 +1,33 @@
+{
+  "id": "CENTRE_PADDLE_HIT_P1",
+  "description": "Centre hit on P1 paddle: horizontal travel reverses to +x, vy becomes 0, speed increases by increment.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 54, "y": 300, "vx": -300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 1 }
+  ],
+  "expect": {
+    "state": {
+      "ball": {
+        "x": 54.01,
+        "y": 300,
+        "vx": 325,
+        "vy": 0,
+        "active": true
+      }
+    },
+    "events": ["paddle_hit"],
+    "position_epsilon": 1e-3,
+    "velocity_epsilon": 1e-3
+  }
+}

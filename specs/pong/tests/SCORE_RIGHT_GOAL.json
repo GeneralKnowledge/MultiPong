@@ -1,0 +1,29 @@
+{
+  "id": "SCORE_RIGHT_GOAL",
+  "description": "Ball exiting the right side increments player1 score and enters POINT_SCORED.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 796, "y": 300, "vx": 300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 40, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 3 }
+  ],
+  "expect": {
+    "state": {
+      "mode": "POINT_SCORED",
+      "player1": { "score": 1 },
+      "player2": { "score": 0 },
+      "serving_player": 2,
+      "ball": { "x": 400, "y": 300, "active": false }
+    },
+    "events": ["score"]
+  }
+}

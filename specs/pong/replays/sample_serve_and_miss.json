@@ -1,0 +1,24 @@
+{
+  "id": "sample_serve_and_miss",
+  "version": "1.0.0",
+  "tick_rate": 60,
+  "description": "Minimal replay: start from PLAYING with ball moving right; no paddle input; expect eventual score. Used to exercise replay tooling later — not a full match.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 400, "y": 300, "vx": 300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 40, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "frames": [
+    { "tick": 0, "held": [], "pressed": [] }
+  ],
+  "expect_final": {
+    "comment": "Run with held=[] for 120 ticks in tooling; expect player1.score >= 1. Explicit multi-tick frames can be expanded by runners that treat missing ticks as empty input."
+  }
+}

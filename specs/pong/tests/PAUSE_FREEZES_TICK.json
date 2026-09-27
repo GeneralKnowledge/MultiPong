@@ -1,0 +1,27 @@
+{
+  "id": "PAUSE_FREEZES_TICK",
+  "description": "While PAUSED, tick does not advance and ball does not move.",
+  "initial": {
+    "mode": "PAUSED",
+    "tick": 10,
+    "elapsed_time": 0.16666666666666666,
+    "point_pause_remaining": 0,
+    "mode_before_pause": "PLAYING",
+    "ball": { "x": 400, "y": 300, "vx": 300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": ["P1_UP"], "pressed": [], "repeat": 30 }
+  ],
+  "expect": {
+    "state": {
+      "mode": "PAUSED",
+      "tick": 10,
+      "ball": { "x": 400, "y": 300 },
+      "player1": { "y": 300 }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+# Multi-engine games — ignore patterns
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Rust
+**/target/
+Cargo.lock
+
+# Node
+node_modules/
+dist/
+
+# Engine / build junk (implementations may add more locally)
+*.user
+*.userprefs
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Library/
+Temp/
+Logs/
+.godot/
+export/
+export_presets.cfg
+
+# Test outputs (keep intentional reports if committed)
+**/reports/*.tmp
+**/traces/
+*.jsonl
+
+# Large local asset caches
+**/Imported/

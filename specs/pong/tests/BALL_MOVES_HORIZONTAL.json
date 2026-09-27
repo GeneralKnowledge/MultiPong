@@ -1,0 +1,26 @@
+{
+  "id": "BALL_MOVES_HORIZONTAL",
+  "description": "Ball with velocity (300,0) travels +300 px in x after 1.0s (60 ticks) with no collisions.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 400, "y": 300, "vx": 300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 60 }
+  ],
+  "expect": {
+    "state": {
+      "mode": "PLAYING",
+      "tick": 60,
+      "ball": { "x": 700, "y": 300, "vx": 300, "vy": 0, "active": true }
+    }
+  }
+}

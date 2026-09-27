@@ -1,0 +1,26 @@
+{
+  "id": "POINT_PAUSE_RESUMES",
+  "description": "After POINT_PAUSE_DURATION (60 ticks), mode returns to PLAYING and ball becomes active.",
+  "initial": {
+    "mode": "POINT_SCORED",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 1.0,
+    "mode_before_pause": null,
+    "ball": { "x": 400, "y": 300, "vx": -300, "vy": 0, "active": false },
+    "player1": { "y": 300, "score": 1 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 2,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 60 }
+  ],
+  "expect": {
+    "state": {
+      "mode": "PLAYING",
+      "point_pause_remaining": 0,
+      "ball": { "active": true, "vx": -300, "vy": 0 }
+    }
+  }
+}
