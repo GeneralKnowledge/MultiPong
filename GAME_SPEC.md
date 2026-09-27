@@ -66,7 +66,7 @@ If `GAME_SPEC.md` and `constants.json` disagree, **`constants.json` wins for num
 
 | Game | Spec | Status |
 | --- | --- | --- |
-| Pong | [specs/pong/GAME_SPEC.md](specs/pong/GAME_SPEC.md) | Canonical spec complete; implementations not started |
+| Pong | [specs/pong/GAME_SPEC.md](specs/pong/GAME_SPEC.md) | Spec + reference sim + multiplayer protocol/server |
 
 ---
 
