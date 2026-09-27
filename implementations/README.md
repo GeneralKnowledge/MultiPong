@@ -2,7 +2,7 @@
 
 One directory per engine/framework. See [IMPLEMENTATION_GUIDE.md](../IMPLEMENTATION_GUIDE.md).
 
-Editor-heavy ports (Unity, Unreal, GameMaker, RPG Maker): see [ENGINE_WORKSPLIT.md](../ENGINE_WORKSPLIT.md) for what AI agents should write versus what a human should finish in the IDE.
+Unity / Unreal / GameMaker / RPG Maker: same basic game as `examples/`, not a richer build. See [ENGINE_WORKSPLIT.md](../ENGINE_WORKSPLIT.md) for AI vs human IDE handoff.
 
 | Directory | Engine | Language | Status |
 | --- | --- | --- | --- |

@@ -11,7 +11,7 @@
 
 1. Choose or create `implementations/<engine>/`.
 2. Follow [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md).
-3. For Unity / Unreal / GameMaker / RPG Maker (editor-heavy), also follow [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md) — use the engine for presentation and pipelines; leave Inspector/scene/import work for a human; do not reinvent wheels.
+3. For Unity / Unreal / GameMaker / RPG Maker, also follow [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md) — same simple game as the other clients; AI writes sim/adapters; human wires a minimal IDE project; do not add engine-only features.
 4. Implement simulation + headless tests before polishing art.
 5. Pass all tests under `specs/pong/tests/`.
 6. Fill in the README sections (engine version, run instructions, mapping, differences, AI-maintained vs Human setup).
@@ -38,7 +38,7 @@
 - [ ] Constants loaded from or duplicated exactly from `constants.json`
 - [ ] Headless tests exist and pass
 - [ ] README lists known differences
-- [ ] Editor-heavy ports separate AI-maintained code from human editor setup ([ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md))
+- [ ] IDE ports stay feature-parity with lightweight clients; AI-maintained vs Human setup listed ([ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md))
 - [ ] No unrelated refactors
 
 ## Questions / ambiguity

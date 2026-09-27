@@ -173,11 +173,11 @@ Every `implementations/<engine>/README.md` MUST include:
 
 ---
 
-## AI vs human on editor-heavy engines
+## AI vs human on IDE-centric engines
 
-For Unity, Unreal, GameMaker, RPG Maker, and other IDE-centric ports, see **[ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md)**.
+For Unity, Unreal, GameMaker, RPG Maker, and similar ports, see **[ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md)**.
 
-Short version: AI owns spec, headless sim, tests, thin network adapters, and README checklists; humans own project files, asset import, scenes, juice, bakes, and packaging. Prefer engine features for presentation and pipelines; do not reimplement animation systems, UI frameworks, or cooks. Authoritative rules stay in the spec/`step()` unless the GAME_SPEC explicitly hands a concern to the engine.
+Short version: those ports are the **same simple Pong** as Python/JS/Love — not a feature-richer build. AI owns sim, tests, thin adapters, and checklists; a human wires a minimal project in the IDE. Use the engine to host (window/draw/input); do not reinvent those, and do not turn on Chaos/GAS/UMG menus “because we can.” Rules stay in the spec/`step()`.
 
 ## Placeholder engines
 
