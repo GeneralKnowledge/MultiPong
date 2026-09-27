@@ -1,0 +1,30 @@
+[package]
+name = "multipong_bevy"
+version = "0.1.0"
+edition = "2021"
+description = "Bevy dual-mode MultiPong client (offline AI + online WebSocket)"
+
+[dependencies]
+bevy = { version = "0.15", default-features = false, features = [
+  "bevy_asset",
+  "bevy_core_pipeline",
+  "bevy_render",
+  "bevy_sprite",
+  "bevy_state",
+  "bevy_text",
+  "bevy_window",
+  "bevy_winit",
+  "multi_threaded",
+  "png",
+  "x11",
+] }
+pong_sim = { path = "../../reference/rust" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tungstenite = { version = "0.24", default-features = true, features = ["handshake"] }
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
