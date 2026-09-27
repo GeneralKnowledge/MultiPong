@@ -21,7 +21,7 @@ python3 server.py
 | Godot (GDScript) | [gdscript/](gdscript/) | paste into a Godot 4 project |
 | Unity (C#) | [csharp/](csharp/) | drop script into a Unity scene |
 | Love2D (Lua) | [lua/](lua/) | `love examples/lua` |
-| Bevy / Rust | [rust/](rust/) | `cargo run` in that folder |
+| Rust (macroquad, polished) | [rust/](rust/) | `cargo run --release -- --name rust1` |
 | Unreal | [unreal/](unreal/) | integration notes + Blueprint-friendly message shapes |
 | GameMaker | [gamemaker/](gamemaker/) | GML WebSocket sketch |
 | RPG Maker MZ/MV | [rpgmaker/](rpgmaker/) | plugin wrapping the JS client |
