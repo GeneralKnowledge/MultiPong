@@ -106,6 +106,7 @@ Prefer: **simple specification + simple simulation + simple adapters + simple te
 | --- | --- |
 | Phase 0 — Architecture & documentation | **Done** |
 | Phase 1 — Canonical Pong specification | **Done** |
-| Phase 2 — Reference simulation + tests | **Done** (`reference/pong`, 14/14 tests) |
-| Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`, `examples/`) |
-| Phase 3+ — Full engine ports & tooling | See [ROADMAP.md](ROADMAP.md) |
+| Phase 2 — Reference simulation + tests | **Done** (Python / JS / Rust — 14/14 each) |
+| Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`, polished `examples/`) |
+| Phase 5 (partial) — Cross-language test runners | **Done** (`tools/comparison/run_all_tests.sh`) |
+| Phase 3+ — Heavier engine ports | See [ROADMAP.md](ROADMAP.md) |

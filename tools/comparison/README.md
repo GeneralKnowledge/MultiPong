@@ -1,11 +1,19 @@
-# Comparison tool (future)
+# Comparison tooling
 
-Design target:
+## Now: cross-language canonical tests
 
-```text
-compare pong
+```bash
+./tools/comparison/run_all_tests.sh
 ```
 
-Reads `implementations/*/reports/*.json` and prints a PASS/FAIL/MISSING table. Optionally diffs replay traces.
+Runs the same `specs/pong/tests/` pack against:
 
-Not implemented yet. Architecture: [TESTING.md](../../TESTING.md) §6.
+- Python (`reference/pong`)
+- JavaScript (`reference/js`)
+- Rust (`reference/rust`)
+
+Each runner must print `14/14 passed` (or current total).
+
+## Later
+
+Aggregate per-engine report JSON and replay trace diffs — see [TESTING.md](../../TESTING.md) §6.
