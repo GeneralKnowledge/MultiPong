@@ -1,4 +1,6 @@
-# RPG Maker (MZ / MV) example
+# RPG Maker (MZ / MV) — local-editor stub
+
+Not a dual-mode client you can run from this repo. Plugin sketch for RPG Maker on your machine.
 
 RPG Maker runs JavaScript in Chromium/`nw.js` and can open WebSockets.
 
@@ -26,3 +28,5 @@ For a quick validation without a full RPG Maker project, use the browser example
 ```bash
 cd examples/javascript && python3 -m http.server 8080
 ```
+
+Or run the Love2D / Python dual-mode clients in this repo.

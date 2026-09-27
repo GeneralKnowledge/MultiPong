@@ -1,4 +1,6 @@
-# GameMaker example
+# GameMaker — local-editor stub
+
+Not a dual-mode client you can run from this repo. Sketch for wiring WebSockets inside GameMaker on your machine.
 
 GameMaker supports WebSockets via `network_*` async networking or marketplace extensions (varies by runtime).
 
@@ -25,4 +27,5 @@ if (keyboard_check_pressed(vk_enter)) array_push(pressed, "CONFIRM");
 // from state.player1.y, state.player2.y, state.ball.x/y (Y-down canonical)
 ```
 
-Treat this folder as the contract; wire it to whichever WebSocket extension your GameMaker version uses.
+Treat this folder as the contract; wire it to whichever WebSocket extension your GameMaker version uses.  
+For a runnable dual-mode example in Cursor, use [../python/](../python/) or [../lua/](../lua/).

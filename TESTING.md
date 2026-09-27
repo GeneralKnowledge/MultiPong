@@ -232,4 +232,7 @@ See [specs/pong/tests/README.md](specs/pong/tests/README.md) for the current lis
 | Python | `python3 reference/pong/run_tests.py` |
 | JavaScript | `node reference/js/run_tests.mjs` |
 | Rust | `cd reference/rust && cargo run --release --bin run_tests` |
-| All three | `./tools/comparison/run_all_tests.sh` |
+| Godot (when installed) | `godot4 --headless --path examples/godot -s scripts/run_tests.gd` |
+| Love2D / Lua (when installed) | `love examples/lua -- --test` |
+| Online smoke (server + 2 clients) | `./tools/smoke_online.sh` |
+| All available | `./tools/comparison/run_all_tests.sh` |
