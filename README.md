@@ -111,5 +111,5 @@ Prefer: **simple specification + simple simulation + simple adapters + simple te
 | Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`) |
 | Phase 3 — Dual-mode clients (offline AI / online) | **Done** (`examples/{python,javascript,rust}/`) |
 | Phase 5 (partial) — Cross-language test runners | **Done** (`tools/comparison/run_all_tests.sh`) |
-| Phase 4 — Phaser + Bevy dual-mode clients | **Done** (`examples/phaser/`, `examples/bevy/`) |
-| Phase 4+ — More Pong ports (Godot, Unity, …) | See [ROADMAP.md](ROADMAP.md) — stay on Pong |
+| Phase 4 — Phaser + Bevy + Godot dual-mode clients | **Done** (`examples/{phaser,bevy,godot}/`) |
+| Phase 4+ — More Pong ports (Unity, Love2D, …) | See [ROADMAP.md](ROADMAP.md) — stay on Pong |

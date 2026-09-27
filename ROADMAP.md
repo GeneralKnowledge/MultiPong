@@ -81,15 +81,15 @@ Stay on Pong until most language/engine ports exist; do not start the next game 
 
 - Phaser 3 — `examples/phaser/` (reuses JS sim + AI)
 - Bevy 0.15 — `examples/bevy/` (reuses Rust `pong_sim` + AI)
+- Godot 4.7 — `examples/godot/` (GDScript `PongSim` + AI; runs in Cursor)
 
 **Still open (often need a local editor/PC):**
 
-1. Godot (GDScript)
-2. Love2D (Lua)
-3. Unity (C#)
-4. GameMaker (GML)
-5. Unreal C++ / Blueprints
-6. RPG Maker (JavaScript)
+1. Love2D (Lua)
+2. Unity (C#)
+3. GameMaker (GML)
+4. Unreal C++ / Blueprints
+5. RPG Maker (JavaScript)
 
 **Exit criteria per engine:** Same as Phase 3.
 
