@@ -11,10 +11,11 @@
 
 1. Choose or create `implementations/<engine>/`.
 2. Follow [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md).
-3. Implement simulation + headless tests before polishing art.
-4. Pass all tests under `specs/pong/tests/`.
-5. Fill in the README sections (engine version, run instructions, mapping, differences).
-6. Commit reports under `implementations/<engine>/reports/` when stable.
+3. For Unity / Unreal / GameMaker / RPG Maker (editor-heavy), also follow [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md) — use the engine for presentation and pipelines; leave Inspector/scene/import work for a human; do not reinvent wheels.
+4. Implement simulation + headless tests before polishing art.
+5. Pass all tests under `specs/pong/tests/`.
+6. Fill in the README sections (engine version, run instructions, mapping, differences, AI-maintained vs Human setup).
+7. Commit reports under `implementations/<engine>/reports/` when stable.
 
 ## Changing the Pong specification
 
@@ -33,10 +34,11 @@
 
 ## Code review checklist
 
-- [ ] Simulation has no engine physics for authoritative motion
+- [ ] Simulation has no engine physics for authoritative motion (unless GAME_SPEC explicitly allows it)
 - [ ] Constants loaded from or duplicated exactly from `constants.json`
 - [ ] Headless tests exist and pass
 - [ ] README lists known differences
+- [ ] Editor-heavy ports separate AI-maintained code from human editor setup ([ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md))
 - [ ] No unrelated refactors
 
 ## Questions / ambiguity
