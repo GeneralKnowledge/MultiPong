@@ -16,7 +16,8 @@ python3 server.py
 | Platform | Path | How to run |
 | --- | --- | --- |
 | Python (stdio / optional pygame) | [python/](python/) | `python3 examples/python/client.py` |
-| JavaScript (browser) — Phaser / RPG Maker path | [javascript/](javascript/) | open `index.html` via a tiny static server |
+| JavaScript (browser) | [javascript/](javascript/) | open `index.html` via a tiny static server |
+| Phaser | [phaser/](phaser/) | uses the JS networking layer |
 | Godot (GDScript) | [gdscript/](gdscript/) | paste into a Godot 4 project |
 | Unity (C#) | [csharp/](csharp/) | drop script into a Unity scene |
 | Love2D (Lua) | [lua/](lua/) | `love examples/lua` |
