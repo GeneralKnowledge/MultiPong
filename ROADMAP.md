@@ -33,15 +33,17 @@ Staged plan for the multi-engine games project. Phases are sequential in intent;
 
 ## Phase 2 — Reference implementation
 
-**Status: complete for headless sim**
+**Status: complete for headless sims in Python, JS, and Rust**
 
-- `reference/pong/pong_sim/` — canonical Python simulation
-- `reference/pong/run_tests.py` — runs `specs/pong/tests/` (**14/14 passing**)
-- Windowed local play can still be added; multiplayer examples cover interactive play online
+- `reference/pong/` — Python simulation + tests (**14/14**)
+- `reference/js/` — JavaScript/Node port + tests (**14/14**)
+- `reference/rust/` — Rust port + `run_tests` binary (**14/14**)
+- `tools/comparison/run_all_tests.sh` — runs all three
+- Windowed local offline clients optional; multiplayer examples cover interactive online play
 
-**Exit criteria:** All canonical tests pass; any spec ambiguities found are fixed in `specs/pong/` before multi-engine ports spread.
+**Exit criteria:** All canonical tests pass in each reference language; any spec ambiguities found are fixed in `specs/pong/` before further ports spread.
 
-If the spec is wrong, **fix the spec** — do not quietly diverge the reference.
+If the spec is wrong, **fix the spec** — do not quietly diverge a reference.
 
 ---
 
@@ -58,13 +60,11 @@ If the spec is wrong, **fix the spec** — do not quietly diverge the reference.
 
 ---
 
-## Phase 3 — First translated implementation
+## Phase 3 — Lightweight stack clients (online)
 
-**Goal:** Prove the methodology with a second technology.
+**Status: largely complete for Python / JS / Rust**
 
-**Suggested order:** Pygame (if reference was headless-only) **or** Love2D / Godot — pick one 2D-friendly stack.
-
-**Exit criteria:** Tests pass; README documents mapping; no engine physics for gameplay.
+Polished multiplayer clients under `examples/{python,javascript,rust}/` render authoritative server state. Optional follow-up: wire each client’s offline mode to its language’s `reference/*` sim.
 
 ---
 

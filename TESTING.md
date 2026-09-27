@@ -222,3 +222,12 @@ No shared runtime is required — only shared **file formats**.
 ## 9. Pong initial pack
 
 See [specs/pong/tests/README.md](specs/pong/tests/README.md) for the current list (movement, walls, paddle, scoring, modes, pause).
+
+## 10. Running tests today
+
+| Runner | Command |
+| --- | --- |
+| Python | `python3 reference/pong/run_tests.py` |
+| JavaScript | `node reference/js/run_tests.mjs` |
+| Rust | `cd reference/rust && cargo run --release --bin run_tests` |
+| All three | `./tools/comparison/run_all_tests.sh` |
