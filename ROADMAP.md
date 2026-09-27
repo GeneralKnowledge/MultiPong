@@ -91,9 +91,9 @@ Stay on Pong until most language/engine ports exist; do not start the next game 
 3. Unreal C++ / Blueprints
 4. RPG Maker (JavaScript)
 
-These are **local-editor** ports. How AI and humans should split that work (and what not to reinvent) is documented in [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md).
+These are **local-IDE** ports of the **same basic dual-mode Pong** (not richer games). How AI and humans split IDE handoff — without adding features or reinventing host basics — is in [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md).
 
-**Exit criteria per engine:** Same as Phase 3; editor-heavy ports also need the Human setup checklist from ENGINE_WORKSPLIT.
+**Exit criteria per engine:** Same as Phase 3 (parity with lightweight clients); plus a minimal Human setup checklist from ENGINE_WORKSPLIT.
 
 ---
 
@@ -150,7 +150,7 @@ Each new game:
 
 Discover which concerns stay portable (rules, timing, input actions) and which become engine-specific (3D cameras, complex animation, navmeshes, etc.).
 
-Before opening Unity/Unreal/etc. for a heavier game, read [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md): the GAME_SPEC must say what the engine may own (e.g. character controller vs custom movers), and the port README must separate AI-maintained code from human editor setup.
+Engine choice does not expand scope: a platformer in Unreal should still aim at one faithful simple version. Read [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md) for AI vs human IDE handoff; the GAME_SPEC must say if engine physics is allowed.
 
 ---
 
