@@ -2,6 +2,8 @@
 
 One directory per engine/framework. See [IMPLEMENTATION_GUIDE.md](../IMPLEMENTATION_GUIDE.md).
 
+Editor-heavy ports (Unity, Unreal, GameMaker, RPG Maker): see [ENGINE_WORKSPLIT.md](../ENGINE_WORKSPLIT.md) for what AI agents should write versus what a human should finish in the IDE.
+
 | Directory | Engine | Language | Status |
 | --- | --- | --- | --- |
 | [pygame/](pygame/) | Pygame | Python | Not started |

@@ -29,6 +29,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full separation of concerns.
 | [specs/pong/PROTOCOL.md](specs/pong/PROTOCOL.md) | Multiplayer wire protocol |
 | [TESTING.md](TESTING.md) | Cross-engine tests, replays, comparison goals |
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Rules, faithfulness criteria, per-engine template |
+| [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md) | AI vs human roles for editor-heavy engines (no reinventing wheels) |
 | [ROADMAP.md](ROADMAP.md) | Phased development plan |
 | [backend/](backend/) | Tiny authoritative server |
 | [reference/pong/](reference/pong/) | Python simulation + test runner |
