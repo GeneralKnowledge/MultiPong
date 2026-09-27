@@ -29,6 +29,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full separation of concerns.
 | [specs/pong/PROTOCOL.md](specs/pong/PROTOCOL.md) | Multiplayer wire protocol |
 | [TESTING.md](TESTING.md) | Cross-engine tests, replays, comparison goals |
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Rules, faithfulness criteria, per-engine template |
+| [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md) | AI vs human roles for editor-heavy engines (no reinventing wheels) |
 | [ROADMAP.md](ROADMAP.md) | Phased development plan |
 | [backend/](backend/) | Tiny authoritative server |
 | [reference/pong/](reference/pong/) | Python simulation + test runner |
@@ -44,6 +45,7 @@ multi-engine-games/
 ├── GAME_SPEC.md
 ├── TESTING.md
 ├── IMPLEMENTATION_GUIDE.md
+├── ENGINE_WORKSPLIT.md
 ├── ROADMAP.md
 ├── CONTRIBUTING.md
 │
@@ -115,5 +117,5 @@ Prefer: **simple specification + simple simulation + simple adapters + simple te
 | Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`) |
 | Phase 3 — Dual-mode clients (offline AI / online) | **Done** (`examples/{python,javascript,rust}/`) |
 | Phase 5 (partial) — Cross-language test runners | **Done** (`tools/comparison/run_all_tests.sh`) |
-| Phase 4 — Phaser + Bevy + Godot dual-mode clients | **Done** (`examples/{phaser,bevy,godot}/`) |
-| Phase 4+ — More Pong ports (Unity, Love2D, …) | See [ROADMAP.md](ROADMAP.md) — stay on Pong |
+| Phase 4 — Phaser + Bevy + Godot + Love2D dual-mode clients | **Done** (`examples/{phaser,bevy,godot,lua}/`) |
+| Phase 4+ — Editor-heavy Pong ports (Unity, Unreal, …) | Local IDE + [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md); stay on Pong |

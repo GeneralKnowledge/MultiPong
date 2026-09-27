@@ -82,16 +82,18 @@ Stay on Pong until most language/engine ports exist; do not start the next game 
 - Phaser 3 — `examples/phaser/` (reuses JS sim + AI)
 - Bevy 0.15 — `examples/bevy/` (reuses Rust `pong_sim` + AI)
 - Godot 4.7 — `examples/godot/` (GDScript `PongSim` + AI; runs in Cursor)
+- Love2D 11 — `examples/lua/` (Lua sim + AI + vendored WS)
 
-**Still open (often need a local editor/PC):**
+**Still open (need a local editor / human for real projects):**
 
-1. Love2D (Lua)
-2. Unity (C#)
-3. GameMaker (GML)
-4. Unreal C++ / Blueprints
-5. RPG Maker (JavaScript)
+1. Unity (C#)
+2. GameMaker (GML)
+3. Unreal C++ / Blueprints
+4. RPG Maker (JavaScript)
 
-**Exit criteria per engine:** Same as Phase 3.
+These are **local-editor** ports. How AI and humans should split that work (and what not to reinvent) is documented in [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md).
+
+**Exit criteria per engine:** Same as Phase 3; editor-heavy ports also need the Human setup checklist from ENGINE_WORKSPLIT.
 
 ---
 
@@ -144,9 +146,11 @@ Each new game:
 
 1. Spec + constants + tests first
 2. Reference implementation
-3. Ports
+3. Ports (lightweight examples first; full `implementations/` when an editor earns its keep)
 
 Discover which concerns stay portable (rules, timing, input actions) and which become engine-specific (3D cameras, complex animation, navmeshes, etc.).
+
+Before opening Unity/Unreal/etc. for a heavier game, read [ENGINE_WORKSPLIT.md](ENGINE_WORKSPLIT.md): the GAME_SPEC must say what the engine may own (e.g. character controller vs custom movers), and the port README must separate AI-maintained code from human editor setup.
 
 ---
 
