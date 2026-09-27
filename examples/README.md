@@ -17,8 +17,9 @@ python3 server.py
 | --- | --- | --- | --- |
 | Python (Pygame, polished) | [python/](python/) | `--offline` | `--name alice` |
 | JavaScript (canvas, polished) | [javascript/](javascript/) | `?offline=1` (serve from repo root) | `?name=alice` |
+| Phaser 3 (polished) | [phaser/](phaser/) | `?offline=1` (serve from repo root) | `?name=phaser1` |
 | Rust (macroquad, polished) | [rust/](rust/) | `--offline` | `--name rust1` |
-| Phaser | [phaser/](phaser/) | — | uses the JS networking layer |
+| Bevy 0.15 (polished) | [bevy/](bevy/) | `--offline` | `--name bevy1` |
 | Godot (GDScript) | [gdscript/](gdscript/) | — | paste into a Godot 4 project |
 | Unity (C#) | [csharp/](csharp/) | — | drop script into a Unity scene |
 | Love2D (Lua) | [lua/](lua/) | — | `love examples/lua` |

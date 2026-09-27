@@ -77,15 +77,19 @@ Stay on Pong until most language/engine ports exist; do not start the next game 
 
 **Goal:** Expand coverage without changing the Pong rules. Each new client should prefer dual-mode when a reference sim exists in that language.
 
-Priority suggestion (adjust to contributor interest):
+**Done in-repo (Cursor-friendly stacks):**
+
+- Phaser 3 — `examples/phaser/` (reuses JS sim + AI)
+- Bevy 0.15 — `examples/bevy/` (reuses Rust `pong_sim` + AI)
+
+**Still open (often need a local editor/PC):**
 
 1. Godot (GDScript)
-2. Phaser (TypeScript) or Love2D (Lua)
+2. Love2D (Lua)
 3. Unity (C#)
-4. Bevy (Rust)
-5. GameMaker (GML)
-6. Unreal C++ / Blueprints
-7. RPG Maker (JavaScript)
+4. GameMaker (GML)
+5. Unreal C++ / Blueprints
+6. RPG Maker (JavaScript)
 
 **Exit criteria per engine:** Same as Phase 3.
 
