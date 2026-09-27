@@ -20,13 +20,13 @@ godot4 --path examples/godot -- --online --name godot1
 
 ## Tests
 
-GDScript smoke (AI + a few ticks):
+GDScript runner loads the same `specs/pong/tests/*.json` suite:
 
 ```bash
 godot4 --headless --path examples/godot -s scripts/run_tests.gd
 ```
 
-Full canonical JSON suite: `tools/comparison/run_all_tests.sh` (Python / JS / Rust references).
+Also: `tools/comparison/run_all_tests.sh` for Python / JS / Rust references.
 
 ## Spec mapping
 
@@ -48,4 +48,4 @@ None — Godot 2D matches canonical Y-down.
 
 ## Test results
 
-GDScript smoke: **6/6**. Full suite: covered by reference languages.
+GDScript JSON suite: **18/18** (`specs/pong/tests`).

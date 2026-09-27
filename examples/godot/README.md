@@ -1,77 +1,60 @@
-# Godot 4 dual-mode client
+# Godot 4 — simple dual-mode Pong
 
-Polished Godot **4.7** client. Simulation is a GDScript port of the canonical rules (`scripts/pong_sim.gd`). **No Godot physics** for paddles/ball.
+Beginner-friendly Godot **4.7** example. Simulation is GDScript (`scripts/pong_sim.gd`). **No Godot physics.**
 
-| Mode | How | Who simulates | Opponent |
-| --- | --- | --- | --- |
-| Offline | `O` in-game, or `-- --offline` | Local `PongSim` | Canonical `simple_track` AI (seat 2) |
-| Online | `C` in-game, or `-- --online` | Authoritative server | Remote human |
+| Mode | How | Opponent |
+| --- | --- | --- |
+| Offline (default) | Editor ▶ Run, or `godot4 --path examples/godot` | Canonical AI (seat 2) |
+| Online | `-- --online` or press **C** in-game | Remote human via server |
 
-Godot 2D is Y-down — same as the spec (no axis flip).
+See also [../BEGINNER.md](../BEGINNER.md).
 
-## Requirements
-
-- Godot 4.7+ (`godot4` on PATH recommended)
-- Online: `python3 backend/server.py`
-
-Install Godot (Linux example used in Cursor):
+## Quick start
 
 ```bash
-# official build → ~/.local/bin/godot4
-curl -sL -o /tmp/godot4.zip \
-  https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip
-unzip -o /tmp/godot4.zip -d ~/.local/godot
-ln -sfn ~/.local/godot/Godot_v4.7.2-stable_linux.x86_64 ~/.local/bin/godot4
+# Install Godot 4.7+ and put it on PATH as godot4, then:
+godot4 --path examples/godot
 ```
 
-## Offline (vs AI)
+Press **Enter** to start. You are the left paddle.
 
-```bash
-godot4 --path examples/godot -- --offline
-```
-
-You are seat 1. Enter starts the match.
+Or open `examples/godot` in the Godot editor and press **Play**.
 
 ## Online
 
 ```bash
-python3 backend/server.py   # other terminal
+python3 backend/server.py          # terminal 1
 godot4 --path examples/godot -- --online --name godot1
 ```
 
-| Flag (after `--`) | Default |
+| Flag (after `--`) | Meaning |
 | --- | --- |
-| `--offline` / `--online` | idle until O/C |
-| `--url` | `ws://127.0.0.1:8765` |
-| `--room` | `demo` |
-| `--name` | `godot` |
+| `--offline` | Local sim + AI (default) |
+| `--online` | Connect to server |
+| `--url` | WebSocket URL (default `ws://127.0.0.1:8765`) |
+| `--room` / `--name` | Room and display name |
 
 ## Controls
 
 | Keys | Action |
 | --- | --- |
-| `W` / `↑` | Move up |
-| `S` / `↓` | Move down |
-| `Enter` / `Space` | Confirm |
-| `P` / `Esc` | Pause |
+| `W` / `↑` · `S` / `↓` | Move |
+| `Enter` / `Space` | Confirm / start |
+| `P` | Pause |
 | `R` | Restart |
-| `O` | Start offline vs AI |
-| `C` | Connect online |
+| `O` / `C` | Switch offline / online |
 | `Ctrl+Q` | Quit |
 
-## Headless smoke tests (GDScript port)
+## Tests (same JSON suite as Python/JS/Rust)
 
 ```bash
 godot4 --headless --path examples/godot -s scripts/run_tests.gd
 ```
 
-Full canonical JSON suite remains on the Python/JS/Rust reference runners.
+Loads every file under `specs/pong/tests/`.
 
-## Spec mapping
+## Notes for learners
 
-| Canonical | Godot |
-| --- | --- |
-| `GameState` / `step` / `ai_held` | `scripts/pong_sim.gd` (`PongSim`) |
-| Online protocol | `WebSocketPeer` + `PROTOCOL.md` |
-| Render | `_draw()` on `Node2D` |
-| Physics | **Not used** |
+- Coordinates match the spec (Y-down). No flip needed.
+- Online mode does **not** run local physics — it draws server state.
+- Older helper script: [../gdscript/](../gdscript/) (prefer this folder).

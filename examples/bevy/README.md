@@ -1,39 +1,35 @@
-# Bevy dual-mode client
+# Bevy — simple dual-mode Pong
 
-Polished Bevy 0.15 client. Simulation is the Rust reference (`pong_sim`); Bevy only renders and reads input. **No Bevy physics** for paddles/ball.
+Beginner-friendly Bevy **0.15** example. Simulation is the shared Rust crate `reference/rust` (`pong_sim`). **No Bevy physics.**
 
-| Mode | Flag | Who simulates | Opponent |
-| --- | --- | --- | --- |
-| Online | (default) | Authoritative server | Remote human |
-| Offline | `--offline` | Local `pong_sim` + `simple_track` AI | AI seat 2 |
+| Mode | Flag | Opponent |
+| --- | --- | --- |
+| Online | (default) | Remote human via server |
+| Offline | `--offline` | Canonical AI (seat 2) |
 
-## Requirements
+See also [../BEGINNER.md](../BEGINNER.md).
 
-- Rust 1.85+ (tested with 1.98)
-- Linux: X11 + GPU (or software GL via Mesa)
-- Runtime libs: `libxkbcommon-x11-0`, Mesa (`libegl1`, `libgl1-mesa-dri`)
+Same behaviour as the [Pygame client](../python/): shared rules, seat 1 human offline, teal “you” highlight, identical controls. Bevy is Y-up so positions are converted only when drawing.
 
-On headless / cloud VMs without a discrete GPU:
-
-```bash
-export DISPLAY=:1
-export WGPU_BACKEND=gl
-cargo run --release -- --offline
-```
-
-## Offline (vs AI)
+## Quick start (offline)
 
 ```bash
 cd examples/bevy
 cargo run --release -- --offline
 ```
 
-You are seat 1. Enter starts the match.
+Press **Enter** to start. You are the left paddle.
+
+On a VM without a GPU you may need:
+
+```bash
+export DISPLAY=:1 WGPU_BACKEND=gl
+```
 
 ## Online
 
 ```bash
-python3 backend/server.py   # other terminal
+python3 backend/server.py          # terminal 1
 cd examples/bevy
 cargo run --release -- --name bevy1
 ```
@@ -49,28 +45,14 @@ cargo run --release -- --name bevy1
 
 | Keys | Action |
 | --- | --- |
-| `W` / `↑` | Move up |
-| `S` / `↓` | Move down |
+| `W` / `↑` · `S` / `↓` | Move |
 | `Enter` / `Space` | Confirm |
 | `P` / `Esc` | Pause |
 | `R` | Restart |
 | `Ctrl+Q` | Quit |
 
-## Spec mapping
+## Notes for learners
 
-| Canonical | Bevy |
-| --- | --- |
-| `GameState` / `step` / `ai_held` | `reference/rust` (`pong_sim`) |
-| Input | Seat-relative `UP`/`DOWN`/… mapped in offline to `P1_*` |
-| Render | Sprites + `Text2d` |
-| Physics | **Not used** |
-
-## Coordinates
-
-Canonical space is Y-down, origin top-left. Bevy 2D is Y-up, origin centre. Conversion at the render boundary only:
-
-`bevy_xy = (x - 400, 300 - y)`.
-
-## Tests
-
-Headless canonical tests: `cargo run --release --bin run_tests` in `reference/rust` (shared sim). This client is a presentation/network adapter.
+- Game logic is **not** in Bevy systems — it lives in `pong_sim` (or on the server online).
+- Ball is drawn as a small square sprite (circle approx.); paddles match spec sizes.
+- Headless rules tests: `cd reference/rust && cargo run --release --bin run_tests`

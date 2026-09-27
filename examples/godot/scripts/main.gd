@@ -19,7 +19,7 @@ var _mode: Mode = Mode.IDLE
 var _state: Dictionary = {}
 var _you: int = 0
 var _seats_players: int = 0
-var _status: String = "O = offline · C = connect · Esc quit overlay keys"
+var _status: String = "Offline vs AI · seat P1"
 var _accum: float = 0.0
 var _held_edge: Array[String] = []
 
@@ -36,10 +36,11 @@ var _player_name := "godot"
 func _ready() -> void:
 	_parse_args()
 	_apply_window()
-	if _mode == Mode.OFFLINE:
-		_start_offline()
-	elif _mode == Mode.ONLINE:
+	# Beginner-friendly: editor Run / no flags → offline vs AI immediately.
+	if _mode == Mode.ONLINE:
 		_start_online()
+	else:
+		_start_offline()
 	queue_redraw()
 
 
@@ -67,10 +68,11 @@ func _parse_args() -> void:
 				if i < args.size():
 					_player_name = args[i]
 		i += 1
-	if offline:
-		_mode = Mode.OFFLINE
-	elif online:
+	if online and not offline:
 		_mode = Mode.ONLINE
+	else:
+		# Default offline (also when both omitted — best for Godot editor ▶ Run)
+		_mode = Mode.OFFLINE
 
 
 func _apply_window() -> void:
@@ -106,10 +108,11 @@ func _start_online() -> void:
 func _stop() -> void:
 	if _mode == Mode.ONLINE:
 		_ws.close()
+	_joined = false
 	_mode = Mode.IDLE
 	_state = {}
 	_you = 0
-	_status = "O = offline · C = connect"
+	_status = "Stopped · O offline · C connect"
 
 
 func _process(delta: float) -> void:
@@ -238,7 +241,7 @@ func _draw() -> void:
 
 	if _state.is_empty():
 		_draw_centered("MULTIPONG", Vector2(400, 280), 36, TEXT_COLOR)
-		_draw_centered("O offline · C connect", Vector2(400, 324), 16, HUD_COLOR)
+		_draw_centered("Connecting… · or press O for offline", Vector2(400, 324), 16, HUD_COLOR)
 		return
 
 	_draw_paddle(PongSim.PADDLE_P1_X, float(_state["player1"]["y"]), _you == 1)

@@ -68,6 +68,10 @@ Empty implementation directories are placeholders. Add engines as needed; the st
 
 Full criteria: [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#what-faithful-means).
 
+## Quick start (play something)
+
+See **[examples/BEGINNER.md](examples/BEGINNER.md)** — pick one language, run offline vs AI, then try online.
+
 ## Quick start for implementers
 
 1. Read [ARCHITECTURE.md](ARCHITECTURE.md) and [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md).
