@@ -15,8 +15,8 @@ python3 server.py
 
 | Platform | Path | How to run |
 | --- | --- | --- |
-| Python (stdio / optional pygame) | [python/](python/) | `python3 examples/python/client.py` |
-| JavaScript (browser) | [javascript/](javascript/) | open `index.html` via a tiny static server |
+| Python (Pygame, polished) | [python/](python/) | `python3 examples/python/client.py --name alice` |
+| JavaScript (canvas, polished) | [javascript/](javascript/) | serve folder; open `/?name=alice` |
 | Phaser | [phaser/](phaser/) | uses the JS networking layer |
 | Godot (GDScript) | [gdscript/](gdscript/) | paste into a Godot 4 project |
 | Unity (C#) | [csharp/](csharp/) | drop script into a Unity scene |
