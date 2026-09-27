@@ -4,35 +4,48 @@
 | --- | --- |
 | Engine | Godot |
 | Language | GDScript |
-| Engine version | _TBD_ |
-| Spec | `specs/pong` v1.0.0 |
-| Status | **Not started** |
+| Engine version | 4.7 |
+| Spec | `specs/pong` v1.1.0 |
+| Status | **Dual-mode client in `examples/godot/`** |
 
 ## Install & run
 
-_TBD_
+See [examples/godot/README.md](../../examples/godot/README.md).
+
+```bash
+godot4 --path examples/godot -- --offline
+# or online:
+godot4 --path examples/godot -- --online --name godot1
+```
 
 ## Tests
 
-_TBD — must execute `specs/pong/tests/` headlessly._
+GDScript smoke (AI + a few ticks):
+
+```bash
+godot4 --headless --path examples/godot -s scripts/run_tests.gd
+```
+
+Full canonical JSON suite: `tools/comparison/run_all_tests.sh` (Python / JS / Rust references).
 
 ## Spec mapping
 
 | Canonical | Godot |
 | --- | --- |
-| GameState | _TBD_ |
-| `step()` | _TBD_ |
-| InputFrame | _TBD_ |
-| Render | _TBD_ |
+| GameState / `step` / `ai_held` | `examples/godot/scripts/pong_sim.gd` |
+| Online | `WebSocketPeer` |
+| Render | `Node2D._draw()` |
+| Physics | **Not used** |
 
 ## Coordinate conversion
 
-_TBD (document Y-up or unit scaling if any)._
+None — Godot 2D matches canonical Y-down.
 
 ## Known differences
 
-None yet.
+- Font is the engine fallback font (IBM Plex Mono not bundled).
+- Older sketch: `examples/gdscript/MultiPongClient.gd` (online-only helper). Prefer `examples/godot/`.
 
 ## Test results
 
-None yet.
+GDScript smoke: **6/6**. Full suite: covered by reference languages.

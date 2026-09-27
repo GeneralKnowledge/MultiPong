@@ -1,0 +1,79 @@
+{
+  "$schema_comment": "Authoritative numeric and presentation constants for Pong 1.0.0. GAME_SPEC.md explains behaviour; this file wins on numeric conflicts.",
+  "version": "1.1.0",
+  "playfield": {
+    "width": 800,
+    "height": 600,
+    "background_color": "#0B0E14",
+    "center_line_color": "#2A3344",
+    "center_line_width": 4,
+    "center_line_dash_length": 16,
+    "center_line_gap": 12
+  },
+  "simulation": {
+    "tick_rate": 60,
+    "dt": 0.016666666666666666,
+    "max_steps_per_frame": 5,
+    "max_frame_time": 0.25
+  },
+  "ball": {
+    "radius": 8,
+    "speed_initial": 300,
+    "speed_max": 600,
+    "speed_increment": 25,
+    "color": "#F2F5F8",
+    "separation_epsilon": 0.01
+  },
+  "paddle": {
+    "width": 12,
+    "height": 80,
+    "speed": 400,
+    "color": "#E8EEF5",
+    "p1_x": 40,
+    "p2_x": 760,
+    "max_bounce_angle_deg": 50
+  },
+  "scoring": {
+    "score_to_win": 11,
+    "point_pause_duration": 1.0,
+    "score_color": "#F2F5F8",
+    "score_font_size": 32,
+    "score_p1_center": [
+      300,
+      48
+    ],
+    "score_p2_center": [
+      500,
+      48
+    ]
+  },
+  "ui": {
+    "title": "PONG",
+    "menu_subtitle": "Press Enter",
+    "paused_text": "PAUSED",
+    "game_over_p1": "PLAYER 1 WINS",
+    "game_over_p2": "PLAYER 2 WINS",
+    "game_over_hint": "Press Enter",
+    "text_color": "#F2F5F8",
+    "title_font_size": 48,
+    "subtitle_font_size": 16,
+    "title_center": [
+      400,
+      220
+    ],
+    "subtitle_center": [
+      400,
+      300
+    ]
+  },
+  "comparison": {
+    "position_epsilon": 0.0001,
+    "velocity_epsilon": 0.0001
+  },
+  "ai": {
+    "kind": "simple_track",
+    "deadzone": 12,
+    "default_human_seat": 1,
+    "default_ai_seat": 2
+  }
+}
