@@ -10,10 +10,16 @@ import sys
 import websockets
 
 
-async def client(name: str, hold: list[str], ready: asyncio.Event, done: asyncio.Event) -> dict:
+async def client(
+    name: str,
+    hold: list[str],
+    ready: asyncio.Event,
+    done: asyncio.Event,
+    room: str,
+) -> dict:
     last = {}
     async with websockets.connect("ws://127.0.0.1:8765") as ws:
-        await ws.send(json.dumps({"type": "join", "room": "demo", "name": name}))
+        await ws.send(json.dumps({"type": "join", "room": room, "name": name}))
         ready.set()
         while not done.is_set():
             await ws.send(json.dumps({"type": "input", "held": hold, "pressed": []}))
@@ -28,12 +34,13 @@ async def client(name: str, hold: list[str], ready: asyncio.Event, done: asyncio
 
 
 async def main() -> int:
+    room = f"smoke-{int(asyncio.get_event_loop().time() * 1000) % 1_000_000}"
     done = asyncio.Event()
     r1 = asyncio.Event()
     r2 = asyncio.Event()
-    t1 = asyncio.create_task(client("a", ["UP"], r1, done))
+    t1 = asyncio.create_task(client("a", ["UP"], r1, done, room))
     await r1.wait()
-    t2 = asyncio.create_task(client("b", ["DOWN"], r2, done))
+    t2 = asyncio.create_task(client("b", ["DOWN"], r2, done, room))
     await r2.wait()
     await asyncio.sleep(2.0)
     done.set()
