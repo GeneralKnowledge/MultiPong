@@ -160,6 +160,12 @@ fn main() {
     }));
 
     let mut app = App::new();
+    let window_title = if args.offline {
+        "MultiPong — offline vs AI"
+    } else {
+        "MultiPong — Bevy"
+    };
+
     app.insert_resource(ClearColor(color_hex(0x0b, 0x0e, 0x14)))
         .insert_resource(mode)
         .insert_resource(Args {
@@ -171,7 +177,7 @@ fn main() {
         .insert_resource(NetHandle(Arc::clone(&shared)))
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
-                title: "MultiPong — Bevy".into(),
+                title: window_title.into(),
                 resolution: WindowResolution::new(W, H),
                 resizable: false,
                 ..default()

@@ -1,37 +1,29 @@
-# Python (Pygame) client
+# Python (Pygame) — simple dual-mode Pong
 
-Dual-mode polished client. Presentation from `specs/pong/constants.json`.
+Beginner-friendly example. Presentation from `specs/pong/constants.json`. Simulation from `reference/pong`.
 
-| Mode | Flag | Who simulates | Opponent |
-| --- | --- | --- | --- |
-| Online | (default) | Authoritative server | Remote human |
-| Offline | `--offline` | Local `reference/pong` sim | Canonical `simple_track` AI (seat 2) |
+| Mode | Flag | Opponent |
+| --- | --- | --- |
+| Online | (default) | Remote human via server |
+| Offline | `--offline` | Canonical AI (seat 2) |
 
-Offline AI: [specs/pong/AI_SPEC.md](../../specs/pong/AI_SPEC.md).
+See also [../BEGINNER.md](../BEGINNER.md).
 
-## Setup
+## Quick start (offline)
 
 ```bash
 python3 -m pip install -r examples/python/requirements.txt
-```
-
-## Offline (vs AI)
-
-```bash
 python3 examples/python/client.py --offline
 ```
 
-You are always seat 1 (left). Enter starts the match.
+Press **Enter** to start. You are the left paddle.
 
 ## Online
 
 ```bash
-# server in another terminal:
-python3 backend/server.py
-
+python3 backend/server.py          # terminal 1
 python3 examples/python/client.py --name alice
-# second player:
-python3 examples/python/client.py --name bob
+python3 examples/python/client.py --name bob   # terminal 3
 ```
 
 | Flag | Default |
@@ -45,10 +37,9 @@ python3 examples/python/client.py --name bob
 
 | Keys | Action |
 | --- | --- |
-| `W` / `↑` | Move up |
-| `S` / `↓` | Move down |
+| `W` / `↑` · `S` / `↓` | Move |
 | `Enter` / `Space` | Confirm |
 | `P` / `Esc` | Pause |
 | `R` | Restart |
 
-Your paddle is outlined in teal. Online matches auto-start when the second player joins.
+Your paddle is outlined in teal. Online matches start when the second player joins.

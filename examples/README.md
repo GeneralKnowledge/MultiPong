@@ -1,6 +1,8 @@
 # Cross-platform multiplayer examples
 
-Clients that speak [specs/pong/PROTOCOL.md](../specs/pong/PROTOCOL.md).  
+Simple clients that speak [specs/pong/PROTOCOL.md](../specs/pong/PROTOCOL.md).  
+**New here?** Start with [BEGINNER.md](BEGINNER.md).
+
 Python / JavaScript / Phaser / Rust / Bevy / Godot are **dual-mode**: online (authoritative server) or offline (local sim + [canonical AI](../specs/pong/AI_SPEC.md)).
 
 ## Prerequisites (online)
