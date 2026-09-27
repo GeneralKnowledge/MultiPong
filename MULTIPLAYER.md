@@ -109,3 +109,9 @@ python3 examples/python/client.py
 ```
 
 See [examples/README.md](examples/README.md) and [backend/README.md](backend/README.md).
+
+Automated check (server + two clients):
+
+```bash
+./tools/smoke_online.sh
+```

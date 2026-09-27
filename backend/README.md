@@ -17,6 +17,16 @@ python3 server.py
 
 Connect clients to `ws://127.0.0.1:8765` (or your machine’s LAN IP for phones / other PCs).
 
+## Smoke test (server + two clients)
+
+From the repo root:
+
+```bash
+./tools/smoke_online.sh
+```
+
+Starts `server.py`, runs [smoke_test.py](smoke_test.py) (two thin WebSocket clients), then tears the server down.
+
 ## Behaviour
 
 | Topic | Behaviour |

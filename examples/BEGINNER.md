@@ -14,6 +14,7 @@ You do **not** need every engine. Pick one.
 | Rust (simple) | `cd examples/rust && cargo run --release -- --offline` |
 | Bevy | `cd examples/bevy && cargo run --release -- --offline` |
 | Phaser | From repo root: `python3 -m http.server 8080` → `/examples/phaser/?offline=1` |
+| Love2D | Install Love 11.x, then `love examples/lua -- --offline` |
 
 Controls everywhere: **W/S** or arrows, **Enter** to start, **P** pause, **R** restart.  
 You are the **left** paddle; the right paddle is the shared `simple_track` AI.

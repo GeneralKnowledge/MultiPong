@@ -31,4 +31,14 @@ else
   echo
 fi
 
+if command -v love >/dev/null 2>&1; then
+  echo "=== Love2D (Lua) ==="
+  love examples/lua -- --test
+  echo
+else
+  echo "=== Love2D (Lua) ==="
+  echo "SKIP (love not on PATH)"
+  echo
+fi
+
 echo "All language runners finished."

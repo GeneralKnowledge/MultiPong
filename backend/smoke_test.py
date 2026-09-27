@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import asyncio
 import json
 import sys
@@ -11,6 +12,7 @@ import websockets
 
 
 async def client(
+    url: str,
     name: str,
     hold: list[str],
     ready: asyncio.Event,
@@ -18,7 +20,7 @@ async def client(
     room: str,
 ) -> dict:
     last = {}
-    async with websockets.connect("ws://127.0.0.1:8765") as ws:
+    async with websockets.connect(url) as ws:
         await ws.send(json.dumps({"type": "join", "room": room, "name": name}))
         ready.set()
         while not done.is_set():
@@ -33,14 +35,14 @@ async def client(
         return last
 
 
-async def main() -> int:
+async def run(url: str) -> int:
     room = f"smoke-{int(asyncio.get_event_loop().time() * 1000) % 1_000_000}"
     done = asyncio.Event()
     r1 = asyncio.Event()
     r2 = asyncio.Event()
-    t1 = asyncio.create_task(client("a", ["UP"], r1, done, room))
+    t1 = asyncio.create_task(client(url, "a", ["UP"], r1, done, room))
     await r1.wait()
-    t2 = asyncio.create_task(client("b", ["DOWN"], r2, done, room))
+    t2 = asyncio.create_task(client(url, "b", ["DOWN"], r2, done, room))
     await r2.wait()
     await asyncio.sleep(2.0)
     done.set()
@@ -73,5 +75,12 @@ async def main() -> int:
     return 0
 
 
+def main() -> int:
+    p = argparse.ArgumentParser(description="Two-client MultiPong smoke test")
+    p.add_argument("--url", default="ws://127.0.0.1:8765")
+    args = p.parse_args()
+    return asyncio.run(run(args.url))
+
+
 if __name__ == "__main__":
-    raise SystemExit(asyncio.run(main()))
+    raise SystemExit(main())

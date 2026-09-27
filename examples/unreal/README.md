@@ -1,4 +1,6 @@
-# Unreal Engine example
+# Unreal Engine — local-editor stub
+
+Not a dual-mode client you can run from this repo. Wire the protocol inside Unreal on your machine.
 
 Unreal has no single universal Blueprint WebSocket node across all versions. Recommended paths:
 
@@ -27,4 +29,5 @@ Keep **simulation off** online. Use Blueprints only to:
 - drive UI / pawn visuals from the parsed `state`
 - call a small C++ subsystem that owns the socket (more reliable than pure Blueprint JSON)
 
-Pair with the Python or JS client for the second seat while iterating.
+Pair with the Python or JS client for the second seat while iterating.  
+For a runnable dual-mode example in Cursor, use [../python/](../python/) or [../lua/](../lua/).

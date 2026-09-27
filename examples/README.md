@@ -3,7 +3,7 @@
 Simple clients that speak [specs/pong/PROTOCOL.md](../specs/pong/PROTOCOL.md).  
 **New here?** Start with [BEGINNER.md](BEGINNER.md).
 
-Python / JavaScript / Phaser / Rust / Bevy / Godot are **dual-mode**: online (authoritative server) or offline (local sim + [canonical AI](../specs/pong/AI_SPEC.md)).
+Python / JavaScript / Phaser / Rust / Bevy / Godot / Love2D are **dual-mode**: online (authoritative server) or offline (local sim + [canonical AI](../specs/pong/AI_SPEC.md)).
 
 ## Prerequisites (online)
 
@@ -23,12 +23,14 @@ python3 server.py
 | Rust (macroquad, polished) | [rust/](rust/) | `--offline` | `--name rust1` |
 | Bevy 0.15 (polished) | [bevy/](bevy/) | `--offline` | `--name bevy1` |
 | Godot 4.7 (polished) | [godot/](godot/) | `-- --offline` | `-- --online --name godot1` |
-| Godot (legacy sketch) | [gdscript/](gdscript/) | — | online-only helper script |
-| Unity (C#) | [csharp/](csharp/) | — | drop script into a Unity scene |
-| Love2D (Lua) | [lua/](lua/) | — | `love examples/lua` |
-| Unreal | [unreal/](unreal/) | — | integration notes |
-| GameMaker | [gamemaker/](gamemaker/) | — | GML WebSocket sketch |
-| RPG Maker MZ/MV | [rpgmaker/](rpgmaker/) | — | plugin wrapping the JS client |
+| Love2D 11 (polished) | [lua/](lua/) | `-- --offline` | `-- --name love1` |
+| Godot (legacy sketch) | [gdscript/](gdscript/) | — | local-editor stub (prefer [godot/](godot/)) |
+| Unity (C#) | [csharp/](csharp/) | — | **local-editor stub** — drop script into Unity |
+| Unreal | [unreal/](unreal/) | — | **local-editor stub** — integration notes |
+| GameMaker | [gamemaker/](gamemaker/) | — | **local-editor stub** — GML WebSocket sketch |
+| RPG Maker MZ/MV | [rpgmaker/](rpgmaker/) | — | **local-editor stub** — plugin wrapping the JS client |
+
+Stubs (Unity / Unreal / GameMaker / RPG Maker / legacy GDScript) are **not** runnable in this repo’s CI or Cursor cloud agents — they document how to wire the same protocol inside those editors on your machine.
 
 ## Controls (seat-relative)
 
