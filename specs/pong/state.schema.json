@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-engine-games.local/specs/pong/state.schema.json",
+  "title": "PongGameState",
+  "description": "Authoritative simulation state for canonical Pong. Field names in dumps MUST match this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mode",
+    "tick",
+    "elapsed_time",
+    "point_pause_remaining",
+    "mode_before_pause",
+    "ball",
+    "player1",
+    "player2",
+    "serving_player",
+    "winner"
+  ],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": ["MENU", "PLAYING", "POINT_SCORED", "PAUSED", "GAME_OVER"]
+    },
+    "tick": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "elapsed_time": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Equals tick * dt while ticks advance; frozen when tick does not advance."
+    },
+    "point_pause_remaining": {
+      "type": "number",
+      "minimum": 0
+    },
+    "mode_before_pause": {
+      "type": ["string", "null"],
+      "enum": ["MENU", "PLAYING", "POINT_SCORED", "PAUSED", "GAME_OVER", null]
+    },
+    "ball": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "vx", "vy", "active"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "vx": { "type": "number" },
+        "vy": { "type": "number" },
+        "active": { "type": "boolean" }
+      }
+    },
+    "player1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["y", "score"],
+      "properties": {
+        "y": { "type": "number" },
+        "score": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "player2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["y", "score"],
+      "properties": {
+        "y": { "type": "number" },
+        "score": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "serving_player": {
+      "type": "integer",
+      "enum": [1, 2]
+    },
+    "winner": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "0 = none, 1 = player1, 2 = player2"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-engine-games.local/specs/pong/replay.schema.json",
+  "title": "PongReplay",
+  "description": "Deterministic input sequence for cross-engine replay comparison.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "version", "tick_rate", "initial", "frames"],
+  "properties": {
+    "id": { "type": "string" },
+    "version": { "type": "string" },
+    "tick_rate": { "type": "integer", "const": 60 },
+    "description": { "type": "string" },
+    "initial": {
+      "type": "object",
+      "description": "Full or partial GameState before frame 0."
+    },
+    "frames": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tick"],
+        "properties": {
+          "tick": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Simulation tick index at which this frame is applied (before step)."
+          },
+          "held": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          },
+          "pressed": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          }
+        }
+      }
+    },
+    "expect_final": {
+      "type": "object",
+      "description": "Optional partial final state for convenience checks."
+    }
+  }
+}

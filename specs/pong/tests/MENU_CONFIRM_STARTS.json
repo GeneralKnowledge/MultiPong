@@ -1,0 +1,30 @@
+{
+  "id": "MENU_CONFIRM_STARTS",
+  "description": "CONFIRM from MENU starts PLAYING with serve to the right at initial speed.",
+  "initial": {
+    "mode": "MENU",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 400, "y": 300, "vx": 0, "vy": 0, "active": false },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": ["CONFIRM"], "repeat": 1 }
+  ],
+  "expect": {
+    "state": {
+      "mode": "PLAYING",
+      "ball": { "x": 400, "y": 300, "vx": 300, "vy": 0, "active": true },
+      "player1": { "score": 0, "y": 300 },
+      "player2": { "score": 0, "y": 300 },
+      "serving_player": 1,
+      "winner": 0
+    },
+    "events": ["ui_confirm"]
+  }
+}

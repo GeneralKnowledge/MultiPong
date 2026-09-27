@@ -1,0 +1,25 @@
+{
+  "id": "TOP_WALL_COLLISION",
+  "description": "Ball crossing the top bound reflects vy to positive and clamps y to BALL_RADIUS.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 400, "y": 5, "vx": 0, "vy": -100, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 1 }
+  ],
+  "expect": {
+    "state": {
+      "ball": { "x": 400, "y": 8, "vx": 0, "vy": 100 }
+    },
+    "events": ["wall_hit"]
+  }
+}

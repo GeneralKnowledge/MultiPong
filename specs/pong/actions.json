@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "actions": [
+    {
+      "name": "P1_UP",
+      "kind": "held",
+      "description": "Move player 1 paddle toward y = 0"
+    },
+    {
+      "name": "P1_DOWN",
+      "kind": "held",
+      "description": "Move player 1 paddle toward +y"
+    },
+    {
+      "name": "P2_UP",
+      "kind": "held",
+      "description": "Move player 2 paddle toward y = 0"
+    },
+    {
+      "name": "P2_DOWN",
+      "kind": "held",
+      "description": "Move player 2 paddle toward +y"
+    },
+    {
+      "name": "CONFIRM",
+      "kind": "edge",
+      "description": "Confirm / start / continue"
+    },
+    {
+      "name": "PAUSE",
+      "kind": "edge",
+      "description": "Toggle pause"
+    },
+    {
+      "name": "RESTART",
+      "kind": "edge",
+      "description": "Reset to MENU"
+    }
+  ],
+  "default_bindings": {
+    "keyboard": {
+      "P1_UP": ["KeyW"],
+      "P1_DOWN": ["KeyS"],
+      "P2_UP": ["ArrowUp"],
+      "P2_DOWN": ["ArrowDown"],
+      "CONFIRM": ["Enter", "Space"],
+      "PAUSE": ["Escape", "KeyP"],
+      "RESTART": ["KeyR"]
+    }
+  },
+  "input_frame_schema": {
+    "description": "Per-tick input delivered to simulation",
+    "held": "string[] of held action names",
+    "pressed": "string[] of edge actions that fired this tick"
+  }
+}

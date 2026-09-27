@@ -1,0 +1,29 @@
+{
+  "id": "SCORE_LEFT_GOAL",
+  "description": "Ball exiting the left side increments player2 score; player1 serves next.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 4, "y": 300, "vx": -300, "vy": 0, "active": true },
+    "player1": { "y": 40, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 3 }
+  ],
+  "expect": {
+    "state": {
+      "mode": "POINT_SCORED",
+      "player1": { "score": 0 },
+      "player2": { "score": 1 },
+      "serving_player": 1,
+      "ball": { "x": 400, "y": 300, "active": false }
+    },
+    "events": ["score"]
+  }
+}

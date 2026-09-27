@@ -1,0 +1,24 @@
+{
+  "id": "PADDLE_CLAMP_BOTTOM",
+  "description": "Holding P1_DOWN from y=300 for 1s clamps to 560.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 400, "y": 300, "vx": 0, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": ["P1_DOWN"], "pressed": [], "repeat": 60 }
+  ],
+  "expect": {
+    "state": {
+      "player1": { "y": 560 }
+    }
+  }
+}

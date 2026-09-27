@@ -1,0 +1,32 @@
+{
+  "id": "ANGLED_PADDLE_HIT_P1",
+  "description": "Hit at top edge of P1 paddle (offset=-1): bounce angle -50°, speed 325, direction +x.",
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 54, "y": 260, "vx": -300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [
+    { "held": [], "pressed": [], "repeat": 1 }
+  ],
+  "expect": {
+    "state": {
+      "ball": {
+        "x": 54.01,
+        "y": 260,
+        "vx": 208.9059731481253,
+        "vy": -248.96444401366784
+      }
+    },
+    "events": ["paddle_hit"],
+    "position_epsilon": 1e-3,
+    "velocity_epsilon": 1e-3
+  }
+}
