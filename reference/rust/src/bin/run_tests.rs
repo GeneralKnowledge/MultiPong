@@ -1,10 +1,11 @@
 //! Run canonical specs/pong/tests against the Rust reference simulation.
 
 use pong_sim::{
-    boot_merged, collect_expect_paths, get_path, state_to_value, step, C,
+    ai_held, boot_merged, collect_expect_paths, get_path, state_to_value, step, C,
 };
 use serde::Deserialize;
 use serde_json::Value;
+use std::collections::HashSet;
 use std::fs;
 use std::path::PathBuf;
 use std::process::ExitCode;
@@ -14,6 +15,7 @@ struct TestFile {
     initial: Option<Value>,
     steps: Option<Vec<StepSpec>>,
     expect: Option<Expect>,
+    ai_seat: Option<u8>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -30,6 +32,7 @@ struct Expect {
     events_ordered: Option<bool>,
     position_epsilon: Option<f64>,
     velocity_epsilon: Option<f64>,
+    ai_held: Option<Vec<String>>,
 }
 
 fn expand_steps(steps: &[StepSpec]) -> Vec<(Vec<String>, Vec<String>)> {
@@ -45,7 +48,13 @@ fn expand_steps(steps: &[StepSpec]) -> Vec<(Vec<String>, Vec<String>)> {
     frames
 }
 
-fn values_close(expected: &Value, actual: Option<&Value>, pos_eps: f64, vel_eps: f64, path: &[String]) -> bool {
+fn values_close(
+    expected: &Value,
+    actual: Option<&Value>,
+    pos_eps: f64,
+    vel_eps: f64,
+    path: &[String],
+) -> bool {
     let Some(actual) = actual else {
         return false;
     };
@@ -63,7 +72,8 @@ fn values_close(expected: &Value, actual: Option<&Value>, pos_eps: f64, vel_eps:
     }
     if expected.is_u64() {
         return expected.as_u64() == actual.as_u64()
-            || (expected.as_u64().unwrap() as f64 - actual.as_f64().unwrap_or(f64::NAN)).abs() < 1e-9;
+            || (expected.as_u64().unwrap() as f64 - actual.as_f64().unwrap_or(f64::NAN)).abs()
+                < 1e-9;
     }
     if expected.is_f64() || actual.is_f64() {
         let leaf = path.last().map(|s| s.as_str()).unwrap_or("");
@@ -85,17 +95,46 @@ fn values_close(expected: &Value, actual: Option<&Value>, pos_eps: f64, vel_eps:
     expected == actual
 }
 
+fn same_held(a: &[String], b: &[String]) -> bool {
+    let mut aa = a.to_vec();
+    let mut bb = b.to_vec();
+    aa.sort();
+    bb.sort();
+    aa == bb
+}
+
 fn run_test(path: &PathBuf) -> Result<(), String> {
-    let data: TestFile = serde_json::from_str(
-        &fs::read_to_string(path).map_err(|e| e.to_string())?,
-    )
-    .map_err(|e| e.to_string())?;
+    let data: TestFile =
+        serde_json::from_str(&fs::read_to_string(path).map_err(|e| e.to_string())?)
+            .map_err(|e| e.to_string())?;
 
     let overlay = data.initial.unwrap_or(Value::Object(Default::default()));
     let mut state = boot_merged(&overlay);
+
+    if let (Some(seat), Some(expected)) = (
+        data.ai_seat,
+        data.expect.as_ref().and_then(|e| e.ai_held.as_ref()),
+    ) {
+        let held = ai_held(&state, seat);
+        if !same_held(&held, expected) {
+            return Err(format!("ai_held: expected {:?}, got {:?}", expected, held));
+        }
+    }
+
     let mut events: Vec<String> = Vec::new();
-    for (held, pressed) in expand_steps(data.steps.as_deref().unwrap_or(&[])) {
-        let held_refs: Vec<&str> = held.iter().map(|s| s.as_str()).collect();
+    let steps = data.steps.as_deref().unwrap_or(&[]);
+    let use_ai = data.ai_seat.is_some() && !steps.is_empty();
+    for (held, pressed) in expand_steps(steps) {
+        let mut held_all = held;
+        if use_ai {
+            let seat = data.ai_seat.unwrap();
+            let mut set: HashSet<String> = held_all.into_iter().collect();
+            for a in ai_held(&state, seat) {
+                set.insert(a);
+            }
+            held_all = set.into_iter().collect();
+        }
+        let held_refs: Vec<&str> = held_all.iter().map(|s| s.as_str()).collect();
         let pressed_refs: Vec<&str> = pressed.iter().map(|s| s.as_str()).collect();
         events.extend(step(&mut state, &held_refs, &pressed_refs));
     }
@@ -106,6 +145,7 @@ fn run_test(path: &PathBuf) -> Result<(), String> {
         events_ordered: None,
         position_epsilon: None,
         velocity_epsilon: None,
+        ai_held: None,
     });
     let pos_eps = expect.position_epsilon.unwrap_or(C.position_epsilon);
     let vel_eps = expect.velocity_epsilon.unwrap_or(C.velocity_epsilon);

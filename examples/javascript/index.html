@@ -134,7 +134,7 @@
   <div class="wrap">
     <header>
       <h1>MULTIPONG</h1>
-      <p>JS canvas client · authoritative server</p>
+      <p>JS canvas · offline AI or online server</p>
     </header>
 
     <form class="panel" id="join-form">
@@ -147,16 +147,17 @@
       <label>Server
         <input id="url" name="url" value="ws://127.0.0.1:8765" spellcheck="false" />
       </label>
+      <button type="button" id="offline-btn">Offline vs AI</button>
       <button type="submit" id="connect-btn">Connect</button>
-      <button type="button" id="disconnect-btn" disabled>Disconnect</button>
+      <button type="button" id="disconnect-btn" disabled>Stop</button>
     </form>
 
     <div class="stage">
       <canvas id="c" width="800" height="600" aria-label="Pong playfield"></canvas>
     </div>
-    <div id="status">Not connected</div>
-    <div class="help">W/S or ↑/↓ move · Enter confirm · P pause · R restart</div>
+    <div id="status">Choose Offline or Connect</div>
+    <div class="help">W/S or ↑/↓ move · Enter confirm · P pause · R restart · Offline uses canonical simple_track AI</div>
   </div>
-  <script src="client.js"></script>
+  <script type="module" src="client.js"></script>
 </body>
 </html>

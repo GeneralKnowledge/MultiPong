@@ -1,0 +1,21 @@
+{
+  "id": "AI_TRACKS_BALL_P2",
+  "description": "P2 AI moves up when ball is above paddle and approaching.",
+  "ai_seat": 2,
+  "initial": {
+    "mode": "PLAYING",
+    "tick": 0,
+    "elapsed_time": 0,
+    "point_pause_remaining": 0,
+    "mode_before_pause": null,
+    "ball": { "x": 500, "y": 120, "vx": 300, "vy": 0, "active": true },
+    "player1": { "y": 300, "score": 0 },
+    "player2": { "y": 300, "score": 0 },
+    "serving_player": 1,
+    "winner": 0
+  },
+  "steps": [],
+  "expect": {
+    "ai_held": ["P2_UP"]
+  }
+}

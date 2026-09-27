@@ -37,6 +37,8 @@ JSON files under `specs/<game>/tests/`. Each test:
 2. Applies a sequence of `InputFrame`s (`steps`), one per simulation tick.
 3. Compares the resulting state (and optionally events) to `expect`.
 
+AI cases (`AI_*.json`) may set `ai_seat` and `expect.ai_held` to assert the canonical offline AI adapter before / during stepping. See [specs/pong/AI_SPEC.md](specs/pong/AI_SPEC.md).
+
 Schema: `specs/pong/test.schema.json`.
 
 ### 2.2 Replay tests (Phase 5+)

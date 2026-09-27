@@ -355,6 +355,34 @@ pub fn step(state: &mut GameState, held: &[&str], pressed: &[&str]) -> Vec<Strin
     events
 }
 
+/// Canonical offline AI — specs/pong/AI_SPEC.md.
+pub fn ai_held(state: &GameState, seat: u8) -> Vec<String> {
+    if state.mode != MODE_PLAYING && state.mode != MODE_POINT_SCORED {
+        return vec![];
+    }
+    let paddle_y = if seat == 1 {
+        state.player1.y
+    } else {
+        state.player2.y
+    };
+    let approaching = (seat == 1 && state.ball.vx < 0.0) || (seat == 2 && state.ball.vx > 0.0);
+    let target_y = if state.ball.active && approaching {
+        state.ball.y
+    } else {
+        C.playfield_height / 2.0
+    };
+    let delta = target_y - paddle_y;
+    let up = if seat == 1 { "P1_UP" } else { "P2_UP" };
+    let down = if seat == 1 { "P1_DOWN" } else { "P2_DOWN" };
+    if delta < -C.ai_deadzone {
+        return vec![up.into()];
+    }
+    if delta > C.ai_deadzone {
+        return vec![down.into()];
+    }
+    vec![]
+}
+
 pub fn state_to_value(state: &GameState) -> Value {
     serde_json::to_value(state).expect("state to json")
 }

@@ -25,6 +25,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full separation of concerns.
 | [MULTIPLAYER.md](MULTIPLAYER.md) | Cross-engine online play: authoritative WebSocket server |
 | [GAME_SPEC.md](GAME_SPEC.md) | Spec format + index of games |
 | [specs/pong/GAME_SPEC.md](specs/pong/GAME_SPEC.md) | Complete canonical Pong specification |
+| [specs/pong/AI_SPEC.md](specs/pong/AI_SPEC.md) | Canonical offline `simple_track` AI |
 | [specs/pong/PROTOCOL.md](specs/pong/PROTOCOL.md) | Multiplayer wire protocol |
 | [TESTING.md](TESTING.md) | Cross-engine tests, replays, comparison goals |
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Rules, faithfulness criteria, per-engine template |
@@ -106,7 +107,8 @@ Prefer: **simple specification + simple simulation + simple adapters + simple te
 | --- | --- |
 | Phase 0 — Architecture & documentation | **Done** |
 | Phase 1 — Canonical Pong specification | **Done** |
-| Phase 2 — Reference simulation + tests | **Done** (Python / JS / Rust — 14/14 each) |
-| Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`, polished `examples/`) |
+| Phase 2 — Reference simulation + AI + tests | **Done** (Python / JS / Rust) |
+| Phase 2b — Cross-platform multiplayer backend | **Done** (`backend/`) |
+| Phase 3 — Dual-mode clients (offline AI / online) | **Done** (`examples/{python,javascript,rust}/`) |
 | Phase 5 (partial) — Cross-language test runners | **Done** (`tools/comparison/run_all_tests.sh`) |
-| Phase 3+ — Heavier engine ports | See [ROADMAP.md](ROADMAP.md) |
+| Phase 4+ — More Pong language/engine ports | See [ROADMAP.md](ROADMAP.md) — stay on Pong |

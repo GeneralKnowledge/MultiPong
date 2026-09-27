@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Polished Pygame multiplayer client for MultiPong (authoritative server)."""
+"""Polished Pygame client — online (authoritative server) or offline (local sim + AI)."""
 
 from __future__ import annotations
 
@@ -7,21 +7,20 @@ import argparse
 import asyncio
 import json
 import sys
+import time
 from pathlib import Path
 from typing import Any
-
-try:
-    import websockets
-    from websockets.exceptions import WebSocketException
-except ImportError as exc:
-    raise SystemExit("pip install websockets") from exc
 
 try:
     import pygame
 except ImportError as exc:
     raise SystemExit("pip install pygame") from exc
 
-_SPEC = Path(__file__).resolve().parents[2] / "specs" / "pong" / "constants.json"
+_ROOT = Path(__file__).resolve().parents[2]
+_SPEC = _ROOT / "specs" / "pong" / "constants.json"
+_REF = _ROOT / "reference" / "pong"
+sys.path.insert(0, str(_REF))
+
 with _SPEC.open(encoding="utf-8") as _f:
     C = json.load(_f)
 
@@ -46,6 +45,11 @@ SCORE_P2 = tuple(C["scoring"]["score_p2_center"])
 UI = C["ui"]
 TEXT = UI["text_color"]
 YOU_OUTLINE = "#7FD0C5"
+TICK_RATE = int(C["simulation"]["tick_rate"])
+DT = 1.0 / TICK_RATE
+MAX_STEPS = int(C["simulation"]["max_steps_per_frame"])
+AI_SEAT = int(C["ai"]["default_ai_seat"])
+HUMAN_SEAT = int(C["ai"]["default_human_seat"])
 
 
 def hex_rgb(value: str) -> tuple[int, int, int]:
@@ -55,6 +59,11 @@ def hex_rgb(value: str) -> tuple[int, int, int]:
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="MultiPong Pygame client")
+    p.add_argument(
+        "--offline",
+        action="store_true",
+        help="Local sim + canonical AI (seat 2); no server",
+    )
     p.add_argument("--url", default="ws://127.0.0.1:8765")
     p.add_argument("--room", default="demo")
     p.add_argument("--name", default="python")
@@ -96,6 +105,7 @@ def draw_game(
     you: int | None,
     status: str,
     seats: dict[str, Any] | None,
+    offline: bool,
 ) -> None:
     draw_playfield(screen)
 
@@ -117,11 +127,14 @@ def draw_game(
         mode = state["mode"]
         if mode == "MENU":
             blit_centered(screen, fonts["title"], UI["title"], tuple(UI["title_center"]), TEXT)
-            waiting = (
-                "Waiting for opponent…"
-                if (seats and seats.get("players", 0) < 2)
-                else UI["menu_subtitle"]
-            )
+            if offline:
+                waiting = UI["menu_subtitle"]
+            else:
+                waiting = (
+                    "Waiting for opponent…"
+                    if (seats and seats.get("players", 0) < 2)
+                    else UI["menu_subtitle"]
+                )
             blit_centered(screen, fonts["sub"], waiting, tuple(UI["subtitle_center"]), TEXT)
         elif mode == "PAUSED":
             blit_centered(screen, fonts["title"], UI["paused_text"], (W / 2, H / 2), TEXT)
@@ -135,23 +148,103 @@ def draw_game(
             blit_centered(screen, fonts["sub"], "Point!", (W / 2, H / 2), TEXT)
 
     seat = f"P{you}" if you else "—"
+    mode_label = "offline vs AI" if offline else status
     line = (
-        f"{status}   seat {seat}   "
+        f"{mode_label}   seat {seat}   "
         "W/S or ↑/↓ move · Enter confirm · P pause · R restart"
     )
     screen.blit(fonts["hud"].render(line, True, hex_rgb("#8B95A8")), (12, H - 22))
 
 
-async def run(args: argparse.Namespace) -> None:
-    pygame.init()
-    pygame.display.set_caption(f"MultiPong — {args.name}")
-    screen = pygame.display.set_mode((W, H))
-    fonts = {
+def poll_keys() -> tuple[set[str], list[str], bool]:
+    """Return (held seat-relative, pressed edges, quit)."""
+    pressed: list[str] = []
+    quit_requested = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            quit_requested = True
+        elif event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_RETURN, pygame.K_SPACE):
+                pressed.append("CONFIRM")
+            elif event.key in (pygame.K_p, pygame.K_ESCAPE):
+                pressed.append("PAUSE")
+            elif event.key == pygame.K_r:
+                pressed.append("RESTART")
+
+    keys = pygame.key.get_pressed()
+    held: set[str] = set()
+    if keys[pygame.K_w] or keys[pygame.K_UP]:
+        held.add("UP")
+    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        held.add("DOWN")
+    return held, pressed, quit_requested
+
+
+def make_fonts() -> dict[str, pygame.font.Font]:
+    return {
         "score": pygame.font.SysFont("dejavusansmono", SCORE_SIZE),
         "title": pygame.font.SysFont("dejavusansmono", int(UI["title_font_size"])),
         "sub": pygame.font.SysFont("dejavusansmono", int(UI["subtitle_font_size"])),
         "hud": pygame.font.SysFont("dejavusansmono", 14),
     }
+
+
+def run_offline() -> None:
+    from pong_sim import ai_held, boot_state, step  # noqa: PLC0415
+
+    pygame.init()
+    pygame.display.set_caption("MultiPong — offline vs AI")
+    screen = pygame.display.set_mode((W, H))
+    fonts = make_fonts()
+    state = boot_state()
+    you = HUMAN_SEAT
+    accumulator = 0.0
+    prev = time.perf_counter()
+    running = True
+
+    while running:
+        now = time.perf_counter()
+        frame_dt = min(now - prev, float(C["simulation"]["max_frame_time"]))
+        prev = now
+        accumulator += frame_dt
+
+        held_rel, pressed, quit_requested = poll_keys()
+        if quit_requested:
+            running = False
+
+        steps = 0
+        while accumulator >= DT and steps < MAX_STEPS:
+            human_held: list[str] = []
+            if "UP" in held_rel:
+                human_held.append("P1_UP")
+            if "DOWN" in held_rel:
+                human_held.append("P1_DOWN")
+            held = sorted(set(human_held) | set(ai_held(state, AI_SEAT)))
+            edge = pressed if steps == 0 else []
+            pressed = []
+            step(state, held, edge)
+            accumulator -= DT
+            steps += 1
+
+        draw_game(screen, fonts, state, you, "Offline vs AI", None, offline=True)
+        pygame.display.flip()
+        # Cap display loop lightly; sim is accumulator-driven
+        time.sleep(max(0.0, 1.0 / 120.0 - (time.perf_counter() - now)))
+
+    pygame.quit()
+
+
+async def run_online(args: argparse.Namespace) -> None:
+    try:
+        import websockets
+        from websockets.exceptions import WebSocketException
+    except ImportError as exc:
+        raise SystemExit("pip install websockets") from exc
+
+    pygame.init()
+    pygame.display.set_caption(f"MultiPong — {args.name}")
+    screen = pygame.display.set_mode((W, H))
+    fonts = make_fonts()
 
     state: dict[str, Any] | None = None
     you: int | None = None
@@ -192,31 +285,16 @@ async def run(args: argparse.Namespace) -> None:
             read_task = asyncio.create_task(reader())
             try:
                 while running:
-                    pressed: list[str] = []
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            running = False
-                        elif event.type == pygame.KEYDOWN:
-                            if event.key in (pygame.K_RETURN, pygame.K_SPACE):
-                                pressed.append("CONFIRM")
-                            elif event.key in (pygame.K_p, pygame.K_ESCAPE):
-                                pressed.append("PAUSE")
-                            elif event.key == pygame.K_r:
-                                pressed.append("RESTART")
-
-                    keys = pygame.key.get_pressed()
-                    held: set[str] = set()
-                    if keys[pygame.K_w] or keys[pygame.K_UP]:
-                        held.add("UP")
-                    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-                        held.add("DOWN")
+                    held, pressed, quit_requested = poll_keys()
+                    if quit_requested:
+                        running = False
 
                     await ws.send(
                         json.dumps(
                             {"type": "input", "held": sorted(held), "pressed": pressed}
                         )
                     )
-                    draw_game(screen, fonts, state, you, status, seats)
+                    draw_game(screen, fonts, state, you, status, seats, offline=False)
                     pygame.display.flip()
                     await asyncio.sleep(1 / 60)
             finally:
@@ -233,7 +311,7 @@ async def run(args: argparse.Namespace) -> None:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     end = 0
-            draw_game(screen, fonts, None, None, status, None)
+            draw_game(screen, fonts, None, None, status, None, offline=False)
             pygame.display.flip()
             await asyncio.sleep(1 / 30)
     finally:
@@ -241,4 +319,8 @@ async def run(args: argparse.Namespace) -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(run(parse_args()))
+    args = parse_args()
+    if args.offline:
+        run_offline()
+    else:
+        asyncio.run(run_online(args))
